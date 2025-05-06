@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace MP9_3_PR_NataliaSoria_Garcia.Controllers;
+namespace LibraryApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]

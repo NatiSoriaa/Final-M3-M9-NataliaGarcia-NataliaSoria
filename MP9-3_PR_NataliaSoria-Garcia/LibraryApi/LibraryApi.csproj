@@ -4,7 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>MP9_3_PR_NataliaSoria_Garcia</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
