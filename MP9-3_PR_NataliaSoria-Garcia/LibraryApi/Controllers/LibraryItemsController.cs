@@ -23,41 +23,19 @@ public class LibraryItemsController : ControllerBase
     }
 
 
-    // PUT: api/TodoItems/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutLibraryItem(long id, LibraryItem libraryItem)
-    {
-        if (id != libraryItem.Id)
-        {
-            return BadRequest();
-        }
-
-        _context.Entry(libraryItem).State = EntityState.Modified;
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!TodoItemExists(id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
-
-        return NoContent();
-    }
 
     // POST: api/TodoItems
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<LibraryItem>> PostTodoItem(LibraryItem libraryItem)
+    public async Task<ActionResult<LibraryItem>> PostLibraryItem( string title, string author, string urlcover, int publishedDate)
+    {
+        LibraryItem libraryItem = new LibraryItem
+        {
+            Title = title,
+            Author = author,
+            Urlcover = urlcover,
+            PublishedDate = publishedDate,
+        };
     {
         _context.LibraryItems.Add(libraryItem);
         await _context.SaveChangesAsync();
@@ -65,22 +43,9 @@ public class LibraryItemsController : ControllerBase
         // return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
         return CreatedAtAction(nameof(GetLibraryItems), new { id = libraryItem.Id }, libraryItem);
     }
+}
 
-    // DELETE: api/TodoItems/5
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteTodoItem(long id)
-    {
-        var todoItem = await _context.LibraryItems.FindAsync(id);
-        if (todoItem == null)
-        {
-            return NotFound();
-        }
 
-        _context.LibraryItems.Remove(todoItem);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
-    }
 
     private bool TodoItemExists(long id)
     {

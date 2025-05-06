@@ -6,7 +6,7 @@ public class LibraryItem
     public string Title { get; set; } = string.Empty;
     public string Author { get; set; } = string.Empty;
     public string Urlcover { get; set; } = string.Empty;
-    public DateTime PublishedDate { get; set; }
+    public int PublishedDate { get; set; }
     public string Genre { get; set; } = string.Empty;
     public int Puntuation { get; set; } = int.MinValue;
 }
