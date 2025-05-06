@@ -1,0 +1,315 @@
+
+
+/*  PAGINA INDEX */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f4f4f4;
+  color: #333;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  background: #333;
+  color: #fff;
+  width: 200px;
+  padding: 20px;
+  align-items: center;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin: 20px 0;
+}
+
+.sidebar a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+/* .sidebar {
+  background-image: url('fondo-sidebar.png');
+  background-position: bottom;
+  background-size: contain;
+  background-repeat: no-repeat;
+} */
+.sidebar img{
+  width: 150px;
+  height: 150px;
+  align-items: flex-start;
+  position: relative;
+  top: -30px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.search-bar {
+  padding: 8px 12px;
+  width: 250px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.nav-buttons a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.category-section {
+  margin-bottom: 40px;
+}
+
+.category-section h2 {
+  margin-bottom: 15px;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+}
+
+.book-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 120px;
+  background: #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+ 
+  
+/*  PAGINA CATEGORIA */
+
+.category-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.book-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.book-row {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.book-row:hover {
+  transform: translateY(-3px);
+}
+
+.image-placeholder.small {
+  width: 80px;
+  height: 100px;
+  background: #ccc;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.book-info h3 {
+  margin-bottom: 5px;
+}
+
+.book-info p {
+  margin: 2px 0;
+}
+
+.rating {
+  margin-left: auto;
+  font-size: 20px;
+  color: #f5b301;
+}
+
+
+/*  PAGINA LIBRO */
+
+.book-detail {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.image-placeholder.detail {
+  width: 200px;
+  height: 280px;
+  background: #ccc;
+  border-radius: 12px;
+}
+
+.book-data {
+  max-width: 700px;
+}
+
+.book-data h2 {
+  margin-bottom: 10px;
+}
+
+.book-data .description {
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.rating {
+  font-size: 22px;
+  color: #f5b301;
+  margin-top: 10px;
+}
+
+.reviews {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.reviews h3 {
+  margin-bottom: 15px;
+}
+
+.review {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+
+/*  PAGINA FQ */
+
+.faq-page {
+  display: flex;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.faq-section {
+  flex: 1;
+}
+
+.faq-item {
+  background: #fff;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.faq-section details {
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 15px 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.faq-section summary {
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.faq-section p {
+  margin-top: 10px;
+  color: #444;
+  line-height: 1.5;
+}
+
+.faq-item h3 {
+  margin-bottom: 10px;
+}
+
+.contact-form {
+  flex: 1;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.contact-form h3 {
+  margin-bottom: 15px;
+}
+
+.contact-form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.contact-form button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+
+
+/*  ESTRELLAS */
+
+.rating .star {
+  font-size: 24px;
+  color: #f5b301;
+  cursor: pointer;
+  margin-right: 4px;
+}

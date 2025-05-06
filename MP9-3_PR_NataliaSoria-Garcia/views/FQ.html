@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ - Preguntas Frecuentes</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="app-container">
+
+    <aside class="sidebar">
+        <nav>
+            <a href="/"><img src="logo.png" alt="logo"></a>
+            <ul>
+                <li><a href="/categoria.html">Libros</a></li>
+                <li><a href="#">Actuales</a></li>
+                <li><a href="#">Favoritos</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="main-header">
+            <h1>F&Q</h1>
+        </header>
+
+        <div class="faq-page">
+
+        <div class="faq-section">
+            <details>
+                <summary>¿Quiénes somos?</summary>
+                <p>Somos una plataforma para ayudarte a gestionar tus lecturas, seguir tu progreso y descubrir nuevas historias.</p>
+            </details>
+          
+            <details>
+                <summary>Me equivoqué agregando un libro</summary>
+                <p>Puedes eliminarlo desde la página de detalle del libro o en tus lecturas.</p>
+            </details>
+          
+            <details>
+                <summary>Cambiar email</summary>
+                <p>Ve a tu perfil para modificar tus datos de usuario.</p>
+            </details>
+        </div>
+
+        <div class="contact-form">
+            <h3>Contácta con nosotros</h3>
+            <form>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required />
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required />
+
+                <label for="mensaje">Mensaje:</label>
+                <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+
+                <button type="submit">ENVIAR</button>
+            </form>
+        </div>
+    </div>
+    </main>
+    
+</div>
+
+<script src="rating.js"></script>
+
+</body>
+</html>
