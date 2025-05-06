@@ -1,0 +1,6 @@
+@MP9_3_PR_NataliaSoria_Garcia_HostAddress = http://localhost:5225
+
+GET {{MP9_3_PR_NataliaSoria_Garcia_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
