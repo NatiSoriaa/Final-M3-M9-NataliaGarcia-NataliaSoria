@@ -3,5 +3,5 @@ using Microsoft.EntityFrameworkCore;
     public class LibraryContext : DbContext
     {
         public LibraryContext(DbContextOptions<LibraryContext> options) : base (options) {}
-        public DBSet<LibraryItem> LibraryItems {get; set;} = null!;
+        public DbSet<LibraryItem> LibraryItems {get; set;} = null!;
     }  
