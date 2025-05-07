@@ -2,12 +2,18 @@ using Microsoft.EntityFrameworkCore;
 using LibraryApi.Models;
 using UserApi.Models;
 using UserBookApi.Models;
-using LibraryApi.Controllers;
 using BooksApiCall;
+using Microsoft.AspNetCore.Identity;
+using IdentityApiAuth.Data;
+using LoggedUserAuth.Models; //Crear autentificacion de usuarios
 
 
+/* CONSTRUIMOS LA APLICACIÓN WEB */
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+/* CREAMOS LOS SERVICIOS */
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -19,6 +25,28 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<LibraryContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("LibraryConnection")));
 builder.Services.AddDbContext<UserContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("UserConnection")));
 builder.Services.AddDbContext<UserBookContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("UserBookConnection")));
+builder.Services.AddDbContext<UserContext>(options => options
+    .UseSqlServer(builder.Configuration.GetConnectionString("UserConnection")));
+
+// Configuración de Autenticación y Autorización
+builder.Services
+    .AddAuthorization()
+    .AddAuthentication()
+    .AddBearerToken(IdentityConstants.BearerScheme);
+
+// Configuración de Identity
+builder.Services
+    .AddIdentityCore<UserContext>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<UserContext>()
+    .AddApiEndpoints();
+
+// Configuración de Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+
+/* LLAMAMOS A LA API LIBROS*/
 
 //llamamos a la API de libros 
 builder.Services.AddHttpClient<BooksApiCall.BooksApiCall>();
@@ -57,14 +85,15 @@ using (var scope = app.Services.CreateScope())
             newBook.PublishedDate = book.PublishedDate == 0 ? 0 : book.PublishedDate;
 
             //llamamos a la API portadas de libros para que nos devuelva la url de la portada
-            newBook.Urlcover = $"https://covers.openlibrary.org/b/id/{book.coverID}-L.jpg";
+            newBook.Urlcover = $"https://covers.openlibrary.org/b/id/{book.CoverID}-L.jpg";
         
             books.Add(newBook);
         }
     }  
 }
 
-    
+
+/* LEVANTAMOS LA APLICACIÓN */
 
 
 // Configure the HTTP request pipeline.
@@ -74,11 +103,32 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//construimos el middleware
+app.UseAuthentication();
+
+app.UseAuthorization();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
+//Definimos los endpointss y la autorización
+app.MapGet("/home", (HttpContext httpContext) =>
+{
+    return new
+    {
+        httpContext.User.Identity.Name,
+        httpContext.User.Identity.AuthenticationType,
+        Claims = httpContext.User.Claims.Select(s => new
+        {
+            s.Type, s.Value
+        }).ToList()
+    };
+})
+.RequireAuthorization();
+
+//levantamos la aplicacion
 app.Run();
 

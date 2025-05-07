@@ -2,7 +2,7 @@ using System.Reflection.Metadata;
 
 namespace UserApi.Models;
 
-public class UserItem
+public class UserItem 
 {
     public int Id { get; set; }
     public string Nickname { get; set; } = string.Empty;
