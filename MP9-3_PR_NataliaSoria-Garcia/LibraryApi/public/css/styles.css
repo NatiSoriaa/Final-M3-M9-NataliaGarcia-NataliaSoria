@@ -1,4 +1,137 @@
 
+/* LOGIN Y REGISTER */
+
+#loginButton {
+  font-family: 'Press Start', sans-serif;
+  font-size: 1rem;
+  color: var(--color-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+#loginButton:hover {
+  color: black;
+}
+
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  position:relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 50px;
+  border-radius: 10px;
+  text-align: center;
+  width: auto;
+  box-shadow: rgba(0, 0, 0, 0.7);
+  color: white;
+  border:2px solid white !important;
+}
+
+.modal-content {
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+}
+
+.toggle-buttons{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+  gap: 30px;
+}
+
+.toggle-buttons button:hover{
+  background-color: white !important;
+  color: black;
+}
+/* #loginModal {
+  display: none;
+} */
+
+#showRegister.active, #showLogin.active{
+  background-color: white;
+  color:black;
+
+}
+#registerForm {
+  display: none;
+}
+
+#loginForm {
+  display: none;
+} 
+
+#registerForm.active {
+  display: block;
+}
+
+#loginForm.active {
+  display: block;
+}
+
+#loginForm button, #registerForm button{
+  border-color: #fff;
+  border: 1px solid white;
+}
+
+.close {
+  font-size: 24px;
+  cursor: pointer;
+  position: sticky;
+  display:flex;
+  justify-content: flex-end;
+  color: var(--color-text);
+  color:white;
+}
+
+.close:hover {
+  color: var(--color-primary);
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border: 1px solid var(--color-primary);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-text);
+}
+
+.modal-content button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: var(--color-text);
+  background-color: var(--color-accent);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: var(--color-primary);
+  transform: scale(1.05);
+}
+
+
 
 /*  PAGINA INDEX */
 
