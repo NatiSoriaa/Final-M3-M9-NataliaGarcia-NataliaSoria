@@ -53,9 +53,12 @@ public class LibraryItemsController : ControllerBase
     }
 
 
-    [HttpGet("{title,author}")]
-    //CHECKEAMOS SI UN LIBRO YA EXISTE EN NUESTRA BBDD
-    public async Task<ActionResult<IEnumerable<LibraryItem>>> CheckIfExists(string title,string author)
+    // [HttpGet("{title,author}")]
+    // public async Task<ActionResult<IEnumerable<LibraryItem>>> CheckIfExists(string title,string author)
+
+    // //CHECKEAMOS SI UN LIBRO YA EXISTE EN NUESTRA BBDD
+    [HttpGet("check")]
+    public async Task<ActionResult<LibraryItem>> CheckIfExists([FromQuery] string title, [FromQuery] string author)
     {
         var book = await _context.LibraryItems.FirstOrDefaultAsync(x => x.Title == title && x.Author == author);
         if (book != null)

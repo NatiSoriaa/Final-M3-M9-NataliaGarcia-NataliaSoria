@@ -64,51 +64,52 @@
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  setupFormEvents();
-  setupModalEvents();
+// document.addEventListener("DOMContentLoaded", function () {
+//   setupFormEvents();
+//   setupModalEvents();
 
-  function setupFormEvents() {
+//   function setupFormEvents() {
 
-      document.querySelector('#loginForm').addEventListener('submit', (event) => {
-          event.preventDefault();
-          const email = document.getElementById('log-user').value;
-          const password = document.getElementById('log-passw').value;
-          localStorage.setItem('loggedEmail', email); 
-          login(email, password); 
-      });
+//       document.querySelector('#loginForm').addEventListener('submit', (event) => {
+//           event.preventDefault();
+//           const email = document.getElementById('log-user').value;
+//           const password = document.getElementById('log-passw').value;
+//           localStorage.setItem('loggedEmail', email); 
+//           login(email, password); 
+//       });
 
-      document.querySelector('#registerForm').addEventListener('submit', (event) => {
-          event.preventDefault();
-          const username = document.getElementById('reg-user').value;
-          const email = document.getElementById('reg-email').value;
-          const password = document.getElementById('reg-passw').value;
-          createUser(username, email, password); 
-      });
-  }
+//       document.querySelector('#registerForm').addEventListener('submit', (event) => {
+//           event.preventDefault();
+//           const username = document.getElementById('reg-user').value;
+//           const email = document.getElementById('reg-email').value;
+//           const password = document.getElementById('reg-passw').value;
+//           createUser(username, email, password); 
+//       });
+//   }
 
-  function setupModalEvents() {
-      const loginBtn = document.getElementById("showLogin");
-      const registerBtn = document.getElementById("showRegister");
-      const loginForm = document.getElementById("loginForm");
-      const registerForm = document.getElementById("registerForm");
+//   function setupModalEvents() {
+//       const loginBtn = document.getElementById("showLogin");
+//       const registerBtn = document.getElementById("showRegister");
+//       const loginForm = document.getElementById("loginForm");
+//       const registerForm = document.getElementById("registerForm");
 
-      loginForm.classList.add("active");
+//       loginForm.classList.add("active");
 
-      loginBtn.addEventListener("click", () => {
-          toggleActiveState(loginForm, registerForm, loginBtn, registerBtn);
-      });
+//       loginBtn.addEventListener("click", () => {
+//           toggleActiveState(loginForm, registerForm, loginBtn, registerBtn);
+//       });
 
-      registerBtn.addEventListener("click", () => {
-          toggleActiveState(registerForm, loginForm, registerBtn, loginBtn);
-      });
+//       registerBtn.addEventListener("click", () => {
+//           toggleActiveState(registerForm, loginForm, registerBtn, loginBtn);
+//       });
 
-      function toggleActiveState(activeForm, inactiveForm, activeBtn, inactiveBtn) {
-          activeForm.classList.add("active");
-          inactiveForm.classList.remove("active");
-          activeBtn.classList.add("active");
-          inactiveBtn.classList.remove("active");
-      }
-  }
+//       function toggleActiveState(activeForm, inactiveForm, activeBtn, inactiveBtn) {
+//           activeForm.classList.add("active");
+//           inactiveForm.classList.remove("active");
+//           activeBtn.classList.add("active");
+//           inactiveBtn.classList.remove("active");
+//       }
+//   }
   
-});
+// });
+

@@ -64,6 +64,21 @@ async Task<List<BooksApiProduct>> GetBooksAsync(IServiceProvider services)
     return await booksApiCall.GetBooksAsync();
 }
 
+// Configurar servicios de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 //Revisamos los libros recibidos por la API
@@ -100,6 +115,8 @@ using (var scope = app.Services.CreateScope())
 
 /* LEVANTAMOS LA APLICACIÓN */
 
+// Usar la política de CORS
+app.UseCors("AllowAllOrigins");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
