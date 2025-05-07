@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "hf7vTA/JOE8=",
+  "dgSpecHash": "Hlb89GkEaUo=",
   "success": true,
   "projectFilePath": "C:\\Users\\Natalia\\Desktop\\DAW2o\\M9 - DISSENY D'INTERFICIES WEB\\PROYECTO FINAL\\Final-M3-M9-NataliaGarcia-NataliaSoria\\MP9-3_PR_NataliaSoria-Garcia\\LibraryApi\\LibraryApi.csproj",
   "expectedPackageFiles": [
@@ -180,16 +180,5 @@
     "C:\\Users\\Natalia\\.nuget\\packages\\system.threading.tasks.dataflow\\8.0.0\\system.threading.tasks.dataflow.8.0.0.nupkg.sha512",
     "C:\\Users\\Natalia\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "LibraryApi depende de Swashbuckle.AspNetCore (>= 6.6.0), pero no se encontró Swashbuckle.AspNetCore 6.6.0. Se resolvió una mejor coincidencia aproximada de Swashbuckle.AspNetCore 6.6.1.",
-      "libraryId": "Swashbuckle.AspNetCore",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  "logs": []
 }

@@ -36,14 +36,20 @@ builder.Services
 
 // Configuración de Identity
 builder.Services
-    .AddIdentityCore<UserContext>()
-    .AddRoles<IdentityRole>()
+    .AddIdentityCore<UserLogged>()
     .AddEntityFrameworkStores<UserContext>()
     .AddApiEndpoints();
 
 // Configuración de Swagger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Library API",
+        Version = "v1"
+    });
+});
 
 
 /* LLAMAMOS A LA API LIBROS*/
@@ -100,7 +106,10 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Library API v1");
+    });
 }
 
 //construimos el middleware
@@ -113,6 +122,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseDeveloperExceptionPage();
 
 //Definimos los endpointss y la autorización
 app.MapGet("/home", (HttpContext httpContext) =>

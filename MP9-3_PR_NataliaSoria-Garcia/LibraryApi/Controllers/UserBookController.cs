@@ -108,7 +108,7 @@ namespace LibraryApi.Controllers
             }
 
             //Modificamos el comentario a valor nulo.
-            userBookItem.Status = null;
+            userBookItem.Status = "";
 
             _context.Entry(userBookItem).State = EntityState.Modified;
             await _context.SaveChangesAsync();

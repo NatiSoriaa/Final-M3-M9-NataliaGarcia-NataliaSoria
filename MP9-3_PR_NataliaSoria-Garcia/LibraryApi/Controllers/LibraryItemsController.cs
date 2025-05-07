@@ -53,7 +53,7 @@ public class LibraryItemsController : ControllerBase
     }
 
 
-    [HttpGet]
+    [HttpGet("{title,author}")]
     //CHECKEAMOS SI UN LIBRO YA EXISTE EN NUESTRA BBDD
     public async Task<ActionResult<IEnumerable<LibraryItem>>> CheckIfExists(string title,string author)
     {

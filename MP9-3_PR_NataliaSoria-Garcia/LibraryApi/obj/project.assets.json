@@ -8659,7 +8659,7 @@
       "Microsoft.EntityFrameworkCore.Sqlite >= 9.0.4",
       "Microsoft.EntityFrameworkCore.Tools >= 9.0.4",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 9.0.0",
-      "Swashbuckle.AspNetCore >= 6.6.0"
+      "Swashbuckle.AspNetCore >= 6.6.1"
     ]
   },
   "packageFolders": {
@@ -8742,7 +8742,7 @@
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
-            "version": "[6.6.0, )"
+            "version": "[6.6.1, )"
           }
         },
         "imports": [
@@ -8767,17 +8767,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.307/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "LibraryApi depende de Swashbuckle.AspNetCore (>= 6.6.0), pero no se encontró Swashbuckle.AspNetCore 6.6.0. Se resolvió una mejor coincidencia aproximada de Swashbuckle.AspNetCore 6.6.1.",
-      "libraryId": "Swashbuckle.AspNetCore",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  }
 }

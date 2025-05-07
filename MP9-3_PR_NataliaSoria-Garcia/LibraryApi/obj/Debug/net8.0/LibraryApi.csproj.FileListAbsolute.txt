@@ -302,3 +302,4 @@ C:\Users\Natalia\Desktop\DAW2o\M9 - DISSENY D'INTERFICIES WEB\PROYECTO FINAL\Fin
 C:\Users\Natalia\Desktop\DAW2o\M9 - DISSENY D'INTERFICIES WEB\PROYECTO FINAL\Final-M3-M9-NataliaGarcia-NataliaSoria\MP9-3_PR_NataliaSoria-Garcia\LibraryApi\obj\Debug\net8.0\LibraryApi.pdb
 C:\Users\Natalia\Desktop\DAW2o\M9 - DISSENY D'INTERFICIES WEB\PROYECTO FINAL\Final-M3-M9-NataliaGarcia-NataliaSoria\MP9-3_PR_NataliaSoria-Garcia\LibraryApi\obj\Debug\net8.0\LibraryApi.genruntimeconfig.cache
 C:\Users\Natalia\Desktop\DAW2o\M9 - DISSENY D'INTERFICIES WEB\PROYECTO FINAL\Final-M3-M9-NataliaGarcia-NataliaSoria\MP9-3_PR_NataliaSoria-Garcia\LibraryApi\obj\Debug\net8.0\ref\LibraryApi.dll
+C:\Users\Natalia\Desktop\DAW2o\M9 - DISSENY D'INTERFICIES WEB\PROYECTO FINAL\Final-M3-M9-NataliaGarcia-NataliaSoria\MP9-3_PR_NataliaSoria-Garcia\LibraryApi\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
