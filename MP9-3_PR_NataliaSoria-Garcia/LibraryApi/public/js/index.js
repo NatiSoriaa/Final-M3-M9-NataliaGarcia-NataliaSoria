@@ -85,7 +85,6 @@ document.addEventListener("DOMContentLoaded", function () {
           const password = document.getElementById('reg-passw').value;
           createUser(username, email, password); 
       });
-
   }
 
   function setupModalEvents() {
