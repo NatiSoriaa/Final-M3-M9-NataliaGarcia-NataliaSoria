@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LibraryApi.Models;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace LibraryApi.Controllers;
 
@@ -17,8 +18,11 @@ public class LibraryItemsController : ControllerBase
 
     // GET: api/TodoItems
     [HttpGet]
+
+    //DEVOLVEMOS TODOS LOS LIBROS DE NUESTRA BBDD
     public async Task<ActionResult<IEnumerable<LibraryItem>>> GetLibraryItems()
     {
+        
         return await _context.LibraryItems.ToListAsync();
     }
 
@@ -27,6 +31,7 @@ public class LibraryItemsController : ControllerBase
     // POST: api/TodoItems
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
+    //POSTEAMOS UN NUEVO LIBRO A NUESTRA BBDD
     public async Task<ActionResult<LibraryItem>> PostLibraryItem( string title, string author, string urlcover, int publishedDate)
     {
         LibraryItem libraryItem = new LibraryItem
@@ -35,21 +40,32 @@ public class LibraryItemsController : ControllerBase
             Author = author,
             Urlcover = urlcover,
             PublishedDate = publishedDate,
+            Puntuation = 0,
+            DateTime = DateTime.Now
         };
-    {
+        
         _context.LibraryItems.Add(libraryItem);
         await _context.SaveChangesAsync();
 
         // return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
         return CreatedAtAction(nameof(GetLibraryItems), new { id = libraryItem.Id }, libraryItem);
+        
     }
-}
 
 
-
-    private bool TodoItemExists(long id)
+    [HttpGet]
+    //CHECKEAMOS SI UN LIBRO YA EXISTE EN NUESTRA BBDD
+    public async Task<ActionResult<IEnumerable<LibraryItem>>> CheckIfExists(string title,string author)
     {
-        return _context.LibraryItems.Any(e => e.Id == id);
+        var book = await _context.LibraryItems.FirstOrDefaultAsync(x => x.Title == title && x.Author == author);
+        if (book != null)
+        {
+            return Ok(book);
+        }
+        else
+        {
+            return NotFound();
+        }
     }
 }
 
