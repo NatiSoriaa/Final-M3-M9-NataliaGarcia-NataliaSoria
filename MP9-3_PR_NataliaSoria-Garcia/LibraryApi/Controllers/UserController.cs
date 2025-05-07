@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UserApi.Models;
@@ -20,29 +15,49 @@ namespace LibraryApi.Controllers
             _context = context;
         }
 
-        // GET: api/User
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserItem>>> GetUserItems()
+        //BUSCAR USUARIO POR NICKNAME (Funcion para cuando loggeamos, recibir password e id)
+        [HttpGet("nickname/{nickname}")]
+        public async Task<ActionResult<UserItem>> GetUserByNickname(string nickname)
         {
-            return await _context.UserItems.ToListAsync();
-        }
+            var userExists = await _context.UserItems.Where(x => x.Nickname == nickname).FirstOrDefaultAsync();
 
-        // GET: api/User/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserItem>> GetUserItem(int id)
-        {
-            var userItem = await _context.UserItems.FindAsync(id);
-
-            if (userItem == null)
+            if (userExists == null)
             {
                 return NotFound();
             }
 
-            return userItem;
+            return userExists;
         }
 
-        // PUT: api/User/5
+        //BUSCAR USUARIO POR NICKNAME (Funcion para cuando loggeamos, recibir password e id)
+        [HttpGet("id/{id}")]
+        public async Task<ActionResult<string>> GetUserNicknameById(int id)
+        {
+            var userExists = await _context.UserItems.Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            if (userExists == null)
+            {
+                return NotFound();
+            }
+
+            return userExists.Nickname;
+        }
+      
+      
+
+        // POST: api/User
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<UserItem>> PostUserItem(UserItem userItem)
+        {
+            _context.UserItems.Add(userItem);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetUserNicknameById", new { id = userItem.Id }, userItem);
+        }
+
+        // PUT: api/User/
+        //Actualizar la info del usuario
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUserItem(int id, UserItem userItem)
         {
@@ -59,49 +74,13 @@ namespace LibraryApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserItemExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/User
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<UserItem>> PostUserItem(UserItem userItem)
-        {
-            _context.UserItems.Add(userItem);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUserItem", new { id = userItem.Id }, userItem);
-        }
-
-        // DELETE: api/User/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserItem(int id)
-        {
-            var userItem = await _context.UserItems.FindAsync(id);
-            if (userItem == null)
-            {
+            
                 return NotFound();
-            }
 
-            _context.UserItems.Remove(userItem);
-            await _context.SaveChangesAsync();
+            }
 
             return NoContent();
         }
-
-        private bool UserItemExists(int id)
-        {
-            return _context.UserItems.Any(e => e.Id == id);
-        }
+       
     }
 }

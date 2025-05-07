@@ -20,15 +20,27 @@ namespace LibraryApi.Controllers
             _context = context;
         }
 
-        // GET: api/UserBook
+        // GET: COMENTARIOS DE UN LIBRO
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserBookItem>>> GetUserBookItems()
+        public async Task<ActionResult<IEnumerable<Comment>>> GetBookComents(int id_book)
         {
-            return await _context.UserBookItems.ToListAsync();
+            List<UserBookItem> userBookItem = await _context.UserBookItems.Where(x => x.BookId == id_book).ToListAsync();
+            List<Comment> ListComents= new List<Comment>();
+            foreach(UserBookItem item in userBookItem)
+            {
+                if (item.Comment != null)
+                {
+                    
+                    ListComents.Add(new Comment { userId = item.UserId, comment = item.Comment });
+                }
+            }
+            return ListComents;
+
+            
         }
 
-        // GET: api/UserBook/5
-        [HttpGet("{id}")]
+        //Encontrar un libro por su id
+        [HttpGet("id/{id}")]
         public async Task<ActionResult<UserBookItem>> GetUserBookItem(int id)
         {
             var userBookItem = await _context.UserBookItems.FindAsync(id);
@@ -40,39 +52,55 @@ namespace LibraryApi.Controllers
 
             return userBookItem;
         }
+    
 
-        // PUT: api/UserBook/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserBookItem(int id, UserBookItem userBookItem)
+        // GET: LIBRO POR ESTADO
+        [HttpGet("state/{state}")]
+        public async Task<ActionResult<List<UserLibraryBooks>>> GetBookByCategory(string state)
         {
-            if (id != userBookItem.Id)
+            List<UserBookItem> userBookItem = await _context.UserBookItems.Where(x => x.Status == state).ToListAsync();
+
+            List<UserLibraryBooks> userLibraryBooks = new List<UserLibraryBooks>();
+            foreach (UserBookItem item in userBookItem)
             {
-                return BadRequest();
+                if (item.Status == state)
+                {
+                    userLibraryBooks.Add(new UserLibraryBooks { book_id = item.BookId, Status = item.Status, Comment = item.Comment, Rating = item.Rating });
+                }
             }
+
+            if (userBookItem == null)
+            {
+                return NotFound();
+            }
+
+            return userLibraryBooks;
+        }
+
+        // Actualizar el estado del libro
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{status,comment,rating}")]
+        public async Task<ActionResult<UserBookItem>> PutUserBookItem(int id, string status, string comment, int rating)
+        {
+            var userBookItem = await _context.UserBookItems.FindAsync(id);
+
+            if (userBookItem == null)
+            {
+                return NotFound();
+            }
+
+            //Modificamos el estado en caso de que recibamos valor y este sea diferente al actual
+            if(status!="" && status!=userBookItem.Status) userBookItem.Status = status;
+            if(comment!="" && comment!=userBookItem.Comment) userBookItem.Comment = comment;
+            if(rating!=0 && rating!=userBookItem.Rating) userBookItem.Rating = rating;
 
             _context.Entry(userBookItem).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserBookItemExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
-
-        // POST: api/UserBook
+        
+        // POST: Añadir un libro para el usuario
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<UserBookItem>> PostUserBookItem(UserBookItem userBookItem)
@@ -83,8 +111,28 @@ namespace LibraryApi.Controllers
             return CreatedAtAction("GetUserBookItem", new { id = userBookItem.Id }, userBookItem);
         }
 
-        // DELETE: api/UserBook/5
-        [HttpDelete("{id}")]
+        [HttpPut("comment/{comment}")]
+        public async Task<ActionResult<UserBookItem>> DeleteComment(int id)
+        {
+            var userBookItem = await _context.UserBookItems.FindAsync(id);
+
+            if (userBookItem == null)
+            {
+                return NotFound();
+            }
+
+            //Modificamos el comentario a valor nulo.
+            userBookItem.Status = "";
+
+            _context.Entry(userBookItem).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+        
+
+        // Borrar  un libro de nuestra Biblioteca
+        [HttpDelete("id/{id}")]
         public async Task<IActionResult> DeleteUserBookItem(int id)
         {
             var userBookItem = await _context.UserBookItems.FindAsync(id);
@@ -98,10 +146,19 @@ namespace LibraryApi.Controllers
 
             return NoContent();
         }
+    }
 
-        private bool UserBookItemExists(int id)
-        {
-            return _context.UserBookItems.Any(e => e.Id == id);
-        }
+    public class Comment
+    {
+        public int userId { get; set; }
+        public string comment { get; set; } = string.Empty;
+    }
+
+    public class UserLibraryBooks
+    {
+        public int book_id { get; set; }
+       public string Status { get; set; } = string.Empty;
+       public string? Comment { get; set; } = null;
+       public int Rating { get; set; } = 0;
     }
 }
