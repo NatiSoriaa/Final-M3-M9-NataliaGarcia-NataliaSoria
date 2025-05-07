@@ -16,10 +16,10 @@ namespace LibraryApi.Controllers
         }
 
         //BUSCAR USUARIO POR NICKNAME (Funcion para cuando loggeamos, recibir password e id)
-        [HttpGet("{nickname}")]
+        [HttpGet("nickname/{nickname}")]
         public async Task<ActionResult<UserItem>> GetUserByNickname(string nickname)
         {
-            var userExists = await _context.UserItems.FindAsync(nickname);
+            var userExists = await _context.UserItems.Where(x => x.Nickname == nickname).FirstOrDefaultAsync();
 
             if (userExists == null)
             {
@@ -30,10 +30,10 @@ namespace LibraryApi.Controllers
         }
 
         //BUSCAR USUARIO POR NICKNAME (Funcion para cuando loggeamos, recibir password e id)
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
         public async Task<ActionResult<string>> GetUserNicknameById(int id)
         {
-            var userExists = await _context.UserItems.FindAsync(id);
+            var userExists = await _context.UserItems.Where(x => x.Id == id).FirstOrDefaultAsync();
 
             if (userExists == null)
             {
@@ -53,7 +53,7 @@ namespace LibraryApi.Controllers
             _context.UserItems.Add(userItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUserItem", new { id = userItem.Id }, userItem);
+            return CreatedAtAction("GetUserNicknameById", new { id = userItem.Id }, userItem);
         }
 
         // PUT: api/User/

@@ -38,10 +38,24 @@ namespace LibraryApi.Controllers
 
             
         }
+
+        //Encontrar un libro por su id
+        [HttpGet("id/{id}")]
+        public async Task<ActionResult<UserBookItem>> GetUserBookItem(int id)
+        {
+            var userBookItem = await _context.UserBookItems.FindAsync(id);
+
+            if (userBookItem == null)
+            {
+                return NotFound();
+            }
+
+            return userBookItem;
+        }
     
 
         // GET: LIBRO POR ESTADO
-        [HttpGet("{state}")]
+        [HttpGet("state/{state}")]
         public async Task<ActionResult<List<UserLibraryBooks>>> GetBookByCategory(string state)
         {
             List<UserBookItem> userBookItem = await _context.UserBookItems.Where(x => x.Status == state).ToListAsync();
@@ -97,7 +111,7 @@ namespace LibraryApi.Controllers
             return CreatedAtAction("GetUserBookItem", new { id = userBookItem.Id }, userBookItem);
         }
 
-        [HttpPut("comment")]
+        [HttpPut("comment/{comment}")]
         public async Task<ActionResult<UserBookItem>> DeleteComment(int id)
         {
             var userBookItem = await _context.UserBookItems.FindAsync(id);
@@ -118,7 +132,7 @@ namespace LibraryApi.Controllers
         
 
         // Borrar  un libro de nuestra Biblioteca
-        [HttpDelete("{id}")]
+        [HttpDelete("id/{id}")]
         public async Task<IActionResult> DeleteUserBookItem(int id)
         {
             var userBookItem = await _context.UserBookItems.FindAsync(id);

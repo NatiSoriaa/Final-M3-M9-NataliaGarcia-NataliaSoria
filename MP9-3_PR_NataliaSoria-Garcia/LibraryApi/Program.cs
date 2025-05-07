@@ -25,8 +25,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<LibraryContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("LibraryConnection")));
 builder.Services.AddDbContext<UserContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("UserConnection")));
 builder.Services.AddDbContext<UserBookContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("UserBookConnection")));
-builder.Services.AddDbContext<UserContext>(options => options
-    .UseSqlServer(builder.Configuration.GetConnectionString("UserConnection")));
+builder.Services.AddDbContext<UserContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("UserConnection")));
 
 // Configuración de Autenticación y Autorización
 builder.Services
