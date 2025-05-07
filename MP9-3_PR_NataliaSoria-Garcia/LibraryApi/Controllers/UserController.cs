@@ -15,10 +15,9 @@ namespace LibraryApi.Controllers
             _context = context;
         }
 
-        //BUSCAR 
-        // GET: api/User/5
+        //BUSCAR USUARIO POR NICKNAME (Funcion para cuando loggeamos, recibir password e id)
         [HttpGet("{nickname}")]
-        public async Task<ActionResult<UserItem>> GetUserItem(string nickname)
+        public async Task<ActionResult<UserItem>> GetUserByNickname(string nickname)
         {
             var userExists = await _context.UserItems.FindAsync(nickname);
 
@@ -29,6 +28,21 @@ namespace LibraryApi.Controllers
 
             return userExists;
         }
+
+        //BUSCAR USUARIO POR NICKNAME (Funcion para cuando loggeamos, recibir password e id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<string>> GetUserNicknameById(int id)
+        {
+            var userExists = await _context.UserItems.FindAsync(id);
+
+            if (userExists == null)
+            {
+                return NotFound();
+            }
+
+            return userExists.Nickname;
+        }
+      
       
 
         // POST: api/User
@@ -42,25 +56,31 @@ namespace LibraryApi.Controllers
             return CreatedAtAction("GetUserItem", new { id = userItem.Id }, userItem);
         }
 
-        // DELETE: api/User/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserItem(int id)
+        // PUT: api/User/
+        //Actualizar la info del usuario
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutUserItem(int id, UserItem userItem)
         {
-            var userItem = await _context.UserItems.FindAsync(id);
-            if (userItem == null)
+            if (id != userItem.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            _context.UserItems.Remove(userItem);
-            await _context.SaveChangesAsync();
+            _context.Entry(userItem).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+            
+                return NotFound();
+
+            }
 
             return NoContent();
         }
-
-        private bool UserItemExists(int id)
-        {
-            return _context.UserItems.Any(e => e.Id == id);
-        }
+       
     }
 }
