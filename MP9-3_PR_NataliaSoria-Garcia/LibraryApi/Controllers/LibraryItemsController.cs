@@ -29,7 +29,6 @@ public class LibraryItemsController : ControllerBase
 
 
     // POST: api/TodoItems
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
     //POSTEAMOS UN NUEVO LIBRO A NUESTRA BBDD
     public async Task<ActionResult<LibraryItem>> PostLibraryItem( string title, string author, string urlcover, int publishedDate)

@@ -78,7 +78,6 @@ namespace LibraryApi.Controllers
         }
 
         // Actualizar el estado del libro
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{status,comment,rating}")]
         public async Task<ActionResult<UserBookItem>> PutUserBookItem(int id, string status, string comment, int rating)
         {
@@ -101,7 +100,6 @@ namespace LibraryApi.Controllers
         }
         
         // POST: Añadir un libro para el usuario
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<UserBookItem>> PostUserBookItem(UserBookItem userBookItem)
         {
