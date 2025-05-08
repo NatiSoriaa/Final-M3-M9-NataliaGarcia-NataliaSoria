@@ -1,12 +1,10 @@
-public class BooksApiResponse
-{
-    public List<BooksApi> Docs { get; set; } = new List<BooksApi>();
-}
 
-public class BooksApi
-{
-    public string Title { get; set; } = string.Empty; 
-    public List<string> Author_Name { get; set; } = new List<string>(); 
-    public int? CoverID { get; set; } // "cover_i"
-    public int? First_Publish_Year { get; set; } 
-}
+
+public class BooksApiProduct{
+    public string Title { get; set; } = string.Empty; //title
+    public string Author { get; set; }// author_name[0]
+    public int CoverID { get; set; } // cover_i
+    public string Urlcover { get; set; } = string.Empty; //cover_url
+    public int PublishedDate { get; set; } //first_publish_year
+    }
+    

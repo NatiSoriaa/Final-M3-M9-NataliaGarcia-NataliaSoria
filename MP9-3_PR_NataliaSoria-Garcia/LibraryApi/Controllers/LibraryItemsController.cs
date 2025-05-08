@@ -25,49 +25,5 @@ public class LibraryItemsController : ControllerBase
         
         return await _context.LibraryItems.ToListAsync();
     }
-
-
-
-    // POST: api/TodoItems
-    [HttpPost]
-    //POSTEAMOS UN NUEVO LIBRO A NUESTRA BBDD
-    public async Task<ActionResult<LibraryItem>> PostLibraryItem( string title, string author, string urlcover, int publishedDate)
-    {
-        LibraryItem libraryItem = new LibraryItem
-        {
-            Title = title,
-            Author = author,
-            Urlcover = urlcover,
-            PublishedDate = publishedDate,
-            Puntuation = 0,
-            DateTime = DateTime.Now
-        };
-        
-        _context.LibraryItems.Add(libraryItem);
-        await _context.SaveChangesAsync();
-
-        // return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
-        return CreatedAtAction(nameof(GetLibraryItems), new { id = libraryItem.Id }, libraryItem);
-        
-    }
-
-
-    // [HttpGet("{title,author}")]
-    // public async Task<ActionResult<IEnumerable<LibraryItem>>> CheckIfExists(string title,string author)
-
-    // //CHECKEAMOS SI UN LIBRO YA EXISTE EN NUESTRA BBDD
-    [HttpGet("check")]
-    public async Task<ActionResult<LibraryItem>> CheckIfExists([FromQuery] string title, [FromQuery] string author)
-    {
-        var book = await _context.LibraryItems.FirstOrDefaultAsync(x => x.Title == title && x.Author == author);
-        if (book != null)
-        {
-            return Ok(book);
-        }
-        else
-        {
-            return NotFound();
-        }
-    }
 }
 
