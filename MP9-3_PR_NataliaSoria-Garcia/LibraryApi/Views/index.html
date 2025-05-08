@@ -9,70 +9,84 @@
 <body>
     <div class="app-container">
 
-    <aside class="sidebar">
-        <nav>
-            <a href="index.html"><img src="../public/img/logo.png" alt="logo"></a>
-            <ul>
-                <li><a href="categoria.html">Libros</a></li>
-                <li><a href="#">Actuales</a></li>
-                <li><a href="#">Favoritos</a></li>
-            </ul>
-        </nav>
-    </aside>
+        <aside class="sidebar">
+            <nav>
+                <a href="index.html"><img src="../public/img/logo.png" alt="logo"></a>
+                <ul>
+                    <li><a href="categoria.html">Libros</a></li>
+                    <li><a href="#">Actuales</a></li>
+                    <li><a href="#">Favoritos</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-    <main class="main-content">
+        <main class="main-content">
 
-        <header class="main-header">
-            <input type="text" placeholder="Buscar..." class="search-bar" />
-            <div class="nav-buttons">
-                <a href="#">🔍</a>
-                <div class="user-menu">
-                    <a href="#" class="user-icon">👤</a>
-                    <div class="dropdown-menu">
-                        <a href="#">Iniciar sesión</a>
-                        <a href="#">Registrarse</a>
+            <header class="main-header">
+                <input type="text" placeholder="Buscar..." class="search-bar" />
+                <div class="nav-buttons">
+                    <a href="#">🔍</a>
+                    <div class="user-menu">
+                        <a href="#" class="user-icon">👤</a>
+                        <div class="dropdown-menu">
+                            <a href="#">Iniciar sesión</a>
+                            <a href="#">Registrarse</a>
+                        </div>
+                    </div>
+                    <a href="FQ.html">F&Q</a>
+                    <div class="cerrar-sesion">
+                        <a href="#">
+                            <img src="../public/img/cerrar-sesion.png" alt="icono cerrar sesion">
+                        </a>
                     </div>
                 </div>
-                <a href="FQ.html">F&Q</a>
-                <div class="cerrar-sesion">
-                    <a href="#" >
-                        <img src="../public/img/cerrar-sesion.png" alt="icono cerrar sesion">
-                    </a>
-                </div>
-            </div>
-        </header>
+            </header>
 
-        <section class="category-section">
-            <h2>Categoria 1</h2>
-            <div class="book-grid">
-                <div class="book-card">
-                    <div class="image-placeholder"></div>
-                    <h3>Libro 1</h3>
-                    <p>Autor</p>
-                </div>
-                <div class="book-card">
-                    <div class="image-placeholder"></div>
-                    <h3>Libro 2</h3>
-                    <p>Autor</p>
-                </div>
-            </div>
-        </section>
+            <section class="category-section">
+                <h2>Categoria 1</h2>
+                <div class="book-grid"></div>
+            </section>
 
-        <section class="category-section">
-            <h2>Categoria 2</h2>
-            <div class="book-grid">
-                <div class="book-card">
-                    <div class="image-placeholder"></div>
-                    <h3>Libro 3</h3>
-                    <p>Autor</p>
-                </div>
-            </div>
-        </section>
+            <section class="category-section">
+                <h2>Categoria 2</h2>
+                <div class="book-grid"></div>
+            </section>
 
-    </main>
+        </main>
     </div>
 
-<script src="../public/js/index.js"></script>
+    <script src="../public/js/index.js"></script>
+    <script>
+        
+        // Función para obtener los libros desde la API
+        async function fetchBooks() {
+            try {
+                const response = await fetch('http://localhost:5129/LibraryItems');
+                if (!response.ok) {
+                    throw new Error('Error al obtener los libros');
+                }
+                const books = await response.json();
 
+                const category1Container = document.querySelector('.category-section:nth-of-type(1) .book-grid');
+                category1Container.innerHTML = ''; 
+
+                books.forEach(book => { 
+                    const bookCard = document.createElement('div');
+                    bookCard.classList.add('book-card');
+                    bookCard.innerHTML = `
+                        <img src="${book.urlcover}" alt="${book.title}" class="book-cover">
+                        <h3>${book.title}</h3>
+                        <p>${book.author}</p>
+                        <p>Año: ${book.publishedDate}</p>
+                    `;
+                    category1Container.appendChild(bookCard);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        fetchBooks();
+
+    </script>
 </body>
 </html>
