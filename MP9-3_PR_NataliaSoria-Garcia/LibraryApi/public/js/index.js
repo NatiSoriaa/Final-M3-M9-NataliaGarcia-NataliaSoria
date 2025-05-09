@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-DROPDOWN MENU USER 
+// DROPDOWN MENU USER 
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-LOGIN Y REGISTER
+// LOGIN Y REGISTER
 
 
 

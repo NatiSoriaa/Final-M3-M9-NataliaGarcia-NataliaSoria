@@ -1,6 +1,7 @@
 
 using System.Text.Json;
 using LibraryApi.Models;
+using System.Text.Json.Serialization;
 
 
 namespace BooksApiCall
@@ -28,6 +29,7 @@ namespace BooksApiCall
             Console.WriteLine($"📦 JSON recibido (primeros 500 caracteres): {responseJason.Substring(0, Math.Min(500, responseJason.Length))}");
 
             var booksApiResponse = JsonSerializer.Deserialize<APIResponse>(responseJason);
+            Console.WriteLine($"numFound:" + booksApiResponse.NumFound + " - start:" + booksApiResponse.Start + " - numFoundExact:" + booksApiResponse.NumFoundExact + " - numFoundDocs:" + booksApiResponse.NumFoundDocs + " - documentation_url:" + booksApiResponse.DocumentationUrl + " - q:" + booksApiResponse.Query + " - offset:" + booksApiResponse.Offset);
 
             if (booksApiResponse == null)
             {
@@ -51,20 +53,42 @@ namespace BooksApiCall
     }
     public class APIResponse
     {
-        public int NumFound { get; set; } // "numFound"
-        public int Start { get; set; } // "start"
-        public bool NumFoundExact { get; set; } // "numFoundExact"
-        public int NumFoundDocs { get; set; } // "num_found"
-        public string DocumentationUrl { get; set; } // "documentation_url"
-        public string Query { get; set; } // "q"
-        public object Offset { get; set; } // "offset"
-        public List<BooksApiDocs> Docs { get; set; } = new List<BooksApiDocs>(); // "docs"
+        [JsonPropertyName("numFound")]
+        public int NumFound { get; set; } 
+
+         [JsonPropertyName("start")]
+        public int Start { get; set; } 
+
+         [JsonPropertyName("numFoundExact")]
+        public bool NumFoundExact { get; set; } 
+
+         [JsonPropertyName("num_found")]
+        public int NumFoundDocs { get; set; } 
+
+         [JsonPropertyName("documentation_url")]
+        public string DocumentationUrl { get; set; } 
+
+         [JsonPropertyName("q")]
+        public string Query { get; set; } 
+
+         [JsonPropertyName("offset")]
+        public object Offset { get; set; } 
+
+         [JsonPropertyName("docs")]
+        public List<BooksApiDocs> Docs { get; set; } = new List<BooksApiDocs>(); 
     }
     public class BooksApiDocs
     {
+        [JsonPropertyName("title")]
         public string Title { get; set; } = string.Empty; 
+
+        [JsonPropertyName("author_name")]
         public List<string> Author_Name { get; set; } = new List<string>(); 
+
+        [JsonPropertyName("cover_i")]
         public int Cover_I { get; set; } // "cover_i"
+
+        [JsonPropertyName("first_publish_year")]
         public int First_Publish_Year { get; set; } 
     }
 }
