@@ -9,16 +9,38 @@
 <body>
     <div class="app-container">
 
+            <div class="app-container">
+        <nav>
+            <img src="../public/img/logo.png" alt="logo">
+            <div class="right-links float-right mr-4">
+                <a href="#" class="home"><i class="fa fa-home mr-3"></i></a>
+                <div class="d-inline dropdown mr-3">   
+                </div> <!-- /.dropdown -->
+                    <div class="d-inline dropdown">
+                        <a class="dropdown-toggle" id="messages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                            <img src="http://1.gravatar.com/avatar/47db31bd2e0b161008607d84c74305b5?s=96&d=mm&r=g">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right rounded-0" aria-labelledby="messages">
+                            <a class="dropdown-item" href="#">Edit my profile</a>
+                            <a class="dropdown-item" href="#">Log Out</a>
+                        </div> <!-- /.dropdown-menu -->
+                    </div> <!-- /.dropdown -->
+                </div>
+            </div>
+        </nav>
+        
         <aside class="sidebar">
             <nav>
                 <a href="index.html"><img src="../public/img/logo.png" alt="logo"></a>
                 <ul>
-                    <li><a href="categoria.html">Libros</a></li>
-                    <li><a href="#">Actuales</a></li>
-                    <li><a href="#">Favoritos</a></li>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="categoria.html/{1}">Pendientes</a></li>
+                    <li><a href="categoria.html/{2}">Actuales</a></li>
+                    <li><a href="categoria.html/{3}">Finalizados</a></li>
                 </ul>
             </nav>
         </aside>
+    </div>
       
         <main class="main-content">
 

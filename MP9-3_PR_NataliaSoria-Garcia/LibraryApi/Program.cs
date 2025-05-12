@@ -127,6 +127,7 @@ async Task MainAsync()
 
     // Usar la política de CORS
     app.UseCors("AllowAllOrigins");
+   
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
@@ -151,10 +152,13 @@ async Task MainAsync()
 
     app.UseDeveloperExceptionPage();
 
+    app.UseStaticFiles();
+  
+
     //Definimos los endpointss y la autorización
     app.MapGet("/home",async context=>
     {
-    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "index.html");
+    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "login-register.html");
         await context.Response.SendFileAsync(filePath);
     });
     // .RequireAuthorization();
