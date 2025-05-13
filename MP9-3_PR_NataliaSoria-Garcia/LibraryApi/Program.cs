@@ -143,14 +143,24 @@ async Task MainAsync()
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "login-register.html");
         await context.Response.SendFileAsync(filePath);
     });
-     app.MapGet("/home",async context=>
+    app.MapGet("/home",async context=>
     {
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "index.html");
         await context.Response.SendFileAsync(filePath);
     });
-     app.MapGet("/category",async context=>
+    app.MapGet("/category",async context=>
     {
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "categoria.html");
+        await context.Response.SendFileAsync(filePath);
+    });
+    app.MapGet("/FQ",async context=>
+    {
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "FQ.html");
+        await context.Response.SendFileAsync(filePath);
+    });
+    app.MapGet("/book",async context=>
+    {
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "libro.html");
         await context.Response.SendFileAsync(filePath);
     });
 
