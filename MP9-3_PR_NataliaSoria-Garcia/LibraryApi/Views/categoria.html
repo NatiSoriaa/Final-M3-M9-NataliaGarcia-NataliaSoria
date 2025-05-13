@@ -3,86 +3,101 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Libros Leídos - Categoría</title>
-    <link rel="stylesheet" href="../public/css/styles.css" />
+    <title>Biblioteca Virtual</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 </head>
 <body>
-    <div class="app-container">
+    <div id="page-content" class="app-container">
 
-    <aside class="sidebar">
-        <nav>
-            <a href="index.html"><img src="../public/img/logo.png" alt="logo"></a>
-            <ul>
-                <li><a href="categoria.html">Libros</a></li>
-                <li><a href="#">Actuales</a></li>
-                <li><a href="#">Favoritos</a></li>
-            </ul>
-        </nav>
-    </aside>
+        <aside class="sidebar">
+            <nav>
+                <a href="index.html"><img src="/img/logo.png" alt="logo"></a>
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="#" id="pendings" >Pendientes</a></li>
+                    <li><a href="#" id="actuals">Actuales</a></li>
+                    <li><a href="#" id="readed">Finalizados</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-    <main class="main-content">
+        <main class="main-content">
 
-        <header class="main-header">
-            <input type="text" placeholder="Buscar..." class="search-bar" />
-            <div class="nav-buttons">
-                <a href="#">🔍</a>
-                <div class="user-menu">
-                    <a href="#" class="user-icon">👤</a>
-                    <div class="dropdown-menu">
-                        <a href="#">Iniciar sesión</a>
-                        <a href="#">Registrarse</a>
+            <header class="main-header">
+                <input type="text" placeholder="Buscar..." class="search-bar" />
+                <div class="nav-buttons">
+                    <a href="#">🔍</a>
+                    <div class="user-menu">
+                        <a href="#" class="user-icon">👤</a>
+                        <div class="dropdown-menu">
+                            <a href="#">Iniciar sesión</a>
+                            <a href="#">Registrarse</a>
+                        </div>
+                    </div>
+                    <a href="FQ.html">F&Q</a>
+                    <div class="cerrar-sesion" id="logout-btn">
+                        <a href="#"><img src="/img/cerrar-sesion.png" alt="icono cerrar sesion"></a>
                     </div>
                 </div>
-                <a href="FQ.html">F&Q</a>
-                <a href="#" class="cerrar-sesion">
-                    <img src="../public/img/cerrar-sesion.png" alt="icono cerrar sesion">
-                </a>
-            </div>
-        </header>
+            </header>
 
-        <div class="main-header-categoria">
-            <h1 class="category-title">Categoría: Ciencia Ficción</h1>
-        </div>
+            <section class="category-section">
+                <h2>Biblioteca</h2>
+                <div class="book-grid"></div>
+            </section>
 
-        <section class="book-list">
-            <div class="book-row" onclick="window.location.href='libro.html'">
-                <div class="image-placeholder small"></div>
-                <div class="book-info">
-                    <h3>Libro 1</h3>
-                    <p>Autor: Nombre Autor</p>
-                    <p class="category">Categoría: Ciencia Ficción</p>
-                </div>
-                <div class="rating" data-book-id="123">
-                    <span class="star" data-value="1">☆</span>
-                    <span class="star" data-value="2">☆</span>
-                    <span class="star" data-value="3">☆</span>
-                    <span class="star" data-value="4">☆</span>
-                    <span class="star" data-value="5">☆</span>
-                </div>
-            </div>
-          
-            <div class="book-row" onclick="window.location.href='libro.html'">
-                <div class="image-placeholder small"></div>
-                <div class="book-info">
-                    <h3>Libro 2</h3>
-                    <p>Autor: Otro Autor</p>
-                    <p class="category">Categoría: Ciencia Ficción</p>
-                </div>
-                <div class="rating" data-book-id="123">
-                    <span class="star" data-value="1">☆</span>
-                    <span class="star" data-value="2">☆</span>
-                    <span class="star" data-value="3">☆</span>
-                    <span class="star" data-value="4">☆</span>
-                    <span class="star" data-value="5">☆</span>
-                </div>
-            </div>
-        </section>
-    </main>
-
+        </main>
     </div>
-
-<script src="../public/js/index.js"></script>
-
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="/js/category.js"></script>
 </body>
+<script>
+    //verificamos si el usuario ya ha iniciado sesión
+    const loggedUser = localStorage.getItem('loggedUser');
+    if (!loggedUser || loggedUser === 'null' || loggedUser === '') {
+        Swal.fire({
+            title: "Debe estear logueado para acceder a esta página",
+            imageUrl: "https://c.tenor.com/1FV-IcFk-uMAAAAC/tenor.gif",
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: "Custom image",
+            confirmButtonText: "Ir al login",
+            //esto es para que el fondo quede en blur
+             backdrop: `
+                rgba(0,0,0,0.4)
+                left top
+                no-repeat
+                fixed
+            `,
+            showClass: {
+                popup: `
+                animate__animated
+                animate__fadeInUp
+                animate__faster
+                `
+            },
+            hideClass: {
+                popup: `
+                animate__animated
+                animate__fadeOutDown
+                animate__faster
+                `
+            },
+            //esto es para activar y desactivar el blur del fondo:
+            didOpen: () => {
+                document.getElementById('page-content').style.filter = 'blur(5px)';
+            },
+            willClose: () => {
+                document.getElementById('page-content').style.filter = 'none';
+            }
+            }).then(() => {
+            window.location.href = "/login"; 
+        });
+    }
+</script>
+
 </html>

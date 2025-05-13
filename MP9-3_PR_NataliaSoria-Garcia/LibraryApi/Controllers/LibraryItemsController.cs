@@ -25,5 +25,19 @@ public class LibraryItemsController : ControllerBase
         
         return await _context.LibraryItems.ToListAsync();
     }
+
+    // RECUPERAR LOS ULTIMOS 10 LIBROS AÑADIDOS A LA BBDD
+    [HttpGet("lastbooks")]
+
+    //DEVOLVEMOS TODOS LOS LIBROS DE NUESTRA BBDD
+    public async Task<ActionResult<IEnumerable<LibraryItem>>> GetLastBooks()
+    {
+        
+        return await _context.LibraryItems
+        .OrderByDescending(b => b.DateTime)  
+        .Take(10)
+        .ToListAsync();
+    }
+
 }
 

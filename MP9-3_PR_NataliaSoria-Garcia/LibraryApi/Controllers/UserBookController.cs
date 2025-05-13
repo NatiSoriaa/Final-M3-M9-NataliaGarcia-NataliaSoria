@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UserBookApi.Models;
+using LibraryApi.Models;
 
 namespace LibraryApi.Controllers
 {
@@ -14,6 +15,7 @@ namespace LibraryApi.Controllers
     public class UserBookController : ControllerBase
     {
         private readonly UserBookContext _context;
+        private readonly LibraryContext _libraryContext;
 
         public UserBookController(UserBookContext context)
         {
@@ -56,25 +58,35 @@ namespace LibraryApi.Controllers
 
         // GET: LIBRO POR ESTADO
         [HttpGet("state/{state}")]
-        public async Task<ActionResult<List<UserLibraryBooks>>> GetBookByCategory(string state)
+        public async Task<ActionResult<object>> GetBookByCategory(string state ,  [FromQuery] int id_user)
         {
-            List<UserBookItem> userBookItem = await _context.UserBookItems.Where(x => x.Status == state).ToListAsync();
-
-            List<UserLibraryBooks> userLibraryBooks = new List<UserLibraryBooks>();
-            foreach (UserBookItem item in userBookItem)
+            //Comprobamos que el estado no sea nulo
+            if (state == null)
             {
-                if (item.Status == state)
-                {
-                    userLibraryBooks.Add(new UserLibraryBooks { book_id = item.BookId, Status = item.Status, Comment = item.Comment, Rating = item.Rating });
-                }
+                return BadRequest("El estado no puede ser nulo.");
             }
 
-            if (userBookItem == null)
+            //Comprobamos que el id del usuario no sea nulo
+            if (id_user == 0)
             {
-                return NotFound();
+                return BadRequest("El id del usuario no puede ser nulo.");
             }
 
-            return userLibraryBooks;
+            //Buscamos los libros por su estado
+            {
+                var userBookItems = await _context.UserBookItems.Where(x => x.Status == state && x.UserId==id_user).ToListAsync();
+                if (userBookItems == null || userBookItems.Count == 0)  return NotFound();
+                
+                //lista de los id para buscarlos despues en la tabla libro
+                var userBooksId = userBookItems.Select(x => x.BookId).ToList();
+
+                //buscamos los libros por su id y los recogemos en una lista
+                var userLibraryBooks = await _libraryContext.LibraryItems
+                    .Where(x => userBooksId.Contains(x.Id))
+                    .ToListAsync();
+
+                return Ok(new {userBookItems, userLibraryBooks});
+            }
         }
 
         // Actualizar el estado del libro

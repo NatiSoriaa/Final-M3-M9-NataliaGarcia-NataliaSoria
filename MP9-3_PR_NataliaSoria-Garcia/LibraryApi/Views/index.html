@@ -6,17 +6,20 @@
     <title>Biblioteca Virtual</title>
     <link rel="stylesheet" href="/css/styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 </head>
 <body>
     <div id="page-content" class="app-container">
 
         <aside class="sidebar">
             <nav>
-                <a href="index.html"><img src="../public/img/logo.png" alt="logo"></a>
+                <a href="index.html"><img src="/img/logo.png" alt="logo"></a>
                 <ul>
-                    <li><a href="categoria.html">Libros</a></li>
-                    <li><a href="#">Actuales</a></li>
-                    <li><a href="#">Favoritos</a></li>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="#" id="pendings" >Pendientes</a></li>
+                    <li><a href="#" id="actuals">Actuales</a></li>
+                    <li><a href="#" id="readed">Finalizados</a></li>
                 </ul>
             </nav>
         </aside>
@@ -35,28 +38,33 @@
                         </div>
                     </div>
                     <a href="FQ.html">F&Q</a>
-                    <div class="cerrar-sesion">
-                        <a href="#">
-                            <img src="../public/img/cerrar-sesion.png" alt="icono cerrar sesion">
-                        </a>
+                    <div class="cerrar-sesion" id="logout-btn">
+                        <a href="#"><img src="/img/cerrar-sesion.png" alt="icono cerrar sesion"></a>
                     </div>
                 </div>
             </header>
 
-            <section class="category-section">
-                <h2>Categoria 1</h2>
-                <div class="book-grid"></div>
+            <section class="lastUpdates-section">
+                <div class="container">
+                    <div class="flex-vertical">
+                    <h2 class="subtitulo-h2"><strong>Ultimas Actualizaciones</strong><hr></h2>
+                    </div>
+                    <div class="carrusel-inspiracion-edp" id="lastBooksCarousel">
+                    </div>
+                </div>
             </section>
 
             <section class="category-section">
-                <h2>Categoria 2</h2>
+                <h2>Biblioteca</h2>
                 <div class="book-grid"></div>
             </section>
 
         </main>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="/js/index.js"></script>
 </body>
-<script src="/js/index.js"></script>
 <script>
     //verificamos si el usuario ya ha iniciado sesión
     const loggedUser = localStorage.getItem('loggedUser');

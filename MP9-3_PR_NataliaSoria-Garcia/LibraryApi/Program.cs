@@ -148,6 +148,11 @@ async Task MainAsync()
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "index.html");
         await context.Response.SendFileAsync(filePath);
     });
+     app.MapGet("/category",async context=>
+    {
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "categoria.html");
+        await context.Response.SendFileAsync(filePath);
+    });
 
 
     //levantamos la aplicacion
