@@ -6,8 +6,6 @@ using BooksApiCall;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Identity;
-using LoggedUserAuth.Models; //Crear autentificacion de usuarios
 
 await MainAsync();
 
@@ -34,18 +32,6 @@ async Task MainAsync()
     builder.Services.AddHttpClient<BooksApiCall.BooksApiCall>();
     builder.Services.AddScoped<LibraryApi.Services.LibraryItemService>();
 
-
-    // Configuración de Autenticación y Autorización
-    builder.Services
-        .AddAuthorization()
-        .AddAuthentication()
-        .AddBearerToken(IdentityConstants.BearerScheme);
-
-    // Configuración de Identity
-    builder.Services
-        .AddIdentityCore<UserLogged>()
-        .AddEntityFrameworkStores<UserContext>()
-        .AddApiEndpoints();
 
     // Configuración de Swagger
     builder.Services.AddEndpointsApiExplorer();
@@ -140,13 +126,9 @@ async Task MainAsync()
     }
 
     //construimos el middleware
-    app.UseAuthentication();
-
-    app.UseAuthorization();
 
     app.UseHttpsRedirection();
 
-    app.UseAuthorization();
 
     app.MapControllers();
 
@@ -156,12 +138,17 @@ async Task MainAsync()
   
 
     //Definimos los endpointss y la autorización
-    app.MapGet("/home",async context=>
+    app.MapGet("/login",async context=>
     {
-    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "login-register.html");
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "login-register.html");
         await context.Response.SendFileAsync(filePath);
     });
-    // .RequireAuthorization();
+     app.MapGet("/home",async context=>
+    {
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "index.html");
+        await context.Response.SendFileAsync(filePath);
+    });
+
 
     //levantamos la aplicacion
     app.Run();
