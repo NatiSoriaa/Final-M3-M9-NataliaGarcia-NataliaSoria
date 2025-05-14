@@ -1,0 +1,170 @@
+
+/* LOGIN Y REGISTER */
+
+#loginButton {
+  font-family: 'Press Start', sans-serif;
+  font-size: 1rem;
+  color: var(--color-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+#loginButton:hover {
+  color: black;
+}
+
+.toggle-buttons{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+  gap: 30px;
+}
+
+.toggle-buttons button:hover{
+  background-color: white !important;
+  color: black;
+}
+
+
+.close {
+  font-size: 24px;
+  cursor: pointer;
+  position: sticky;
+  display:flex;
+  justify-content: flex-end;
+  color: var(--color-text);
+  color:white;
+}
+
+.close:hover {
+  color: var(--color-primary);
+}
+
+
+/*  PAGINA INDEX */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f4f4f4;
+  color: #333;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  background: #333;
+  color: #fff;
+  width: 200px;
+  padding: 20px;
+  align-items: center;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin: 20px 0;
+}
+
+.sidebar a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.sidebar img{
+  width: 150px;
+  height: 150px;
+  align-items: flex-start;
+  position: relative;
+  top: -30px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.search-bar {
+  padding: 8px 12px;
+  width: 250px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.nav-buttons a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+/* MAIN */
+
+
+
+
+/* USUARIO */
+
+.user-icon{
+  filter:brightness(0);
+}
+
+.main-header .nav-buttons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.main-header .nav-buttons .user-menu .dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 70px;
+  top: 60px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  padding: 10px;
+}
+
+.main-header .nav-buttons .user-menu .dropdown-menu a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+  margin: auto;
+}
+
+.main-header .nav-buttons .user-menu .dropdown-menu a:hover {
+  background-color: #f0f0f0;
+}
+
+.main-header .nav-buttons .user-menu .dropdown-menu.show {
+  display: block;
+}
+
+.cerrar-sesion img{
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}

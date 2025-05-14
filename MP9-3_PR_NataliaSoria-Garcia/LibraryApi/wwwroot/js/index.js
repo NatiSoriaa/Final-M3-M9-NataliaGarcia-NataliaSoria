@@ -1,16 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-    fetchBooks(); 
-    // setupFormEvents();
-    // setupModalEvents();
+  const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+    fetchBooks(loggedUser); 
     setupLogout();
     setupRatings();
-    fetchLastBooksCarousel();
+    fetchLastBooksCarousel(loggedUser);
     redirectToCategory();
 });
 
   
 // Función para obtener los libros desde la API
-async function fetchBooks() {
+async function fetchBooks(loggedUser) {
     try {
         //recuperamos TODOS los libros
         const response = await fetch('http://localhost:5129/LibraryItems');
@@ -31,6 +30,9 @@ async function fetchBooks() {
                 <p>${book.author}</p>
                 <p>Año: ${book.publishedDate}</p>
             `;
+            bookCard.addEventListener('click',()=>{
+              window.location.href = `/book?bookId=${book.id}`;
+            });
             category1Container.appendChild(bookCard);
         });
 
@@ -40,7 +42,7 @@ async function fetchBooks() {
 }
 
 //funcion carrusel imagenes de CODEPIN
-async function fetchLastBooksCarousel() {
+async function fetchLastBooksCarousel(loggedUser) {
     try {
       //recuperamos los 10 ultimos libros para añadirlos en el carrusel "ultimos añadidos"
       const lastBooks = await fetch('http://localhost:5129/LibraryItems/lastBooks');
@@ -61,7 +63,7 @@ async function fetchLastBooksCarousel() {
               </a>
               <p class="text-description">
                   ${book.author}
-                  <a href="#" class="button-info">más info</a>
+                  <a href="#" class="button-info" onclick="seeBook(${book.id}, ${loggedUser.id})">más info</a>
               </p>
           </div>
           `;
@@ -93,6 +95,11 @@ async function fetchLastBooksCarousel() {
     }
 }
 
+function seeBook(bookid,userID)
+{
+  window.location.href = `/book?bookId=${bookid}&id_user=${userID}`;
+}
+
 //REDIRECCION A LAS DIFERENTES CATEGORIAS DE LIBROS
  function  redirectToCategory() {
   const pendingBooks = document.getElementById("pendings");
@@ -102,6 +109,9 @@ async function fetchLastBooksCarousel() {
   const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
 
   //redireccion a la pagina de libros pendientes
+  console.log("pendingBooks:", pendingBooks);
+  console.log("actualBooks:", actualBooks);
+  console.log("readedBooks:", readedBooks);
   pendingBooks.addEventListener("click", async () => {
     window.location.href = `/category?state=pendiente&id_user=${loggedUser.id}`;
   });

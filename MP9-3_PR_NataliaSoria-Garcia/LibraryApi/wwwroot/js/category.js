@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+(async function () {
     setupLogout();
     setupRatings();
     redirectToCategory();
@@ -51,12 +51,15 @@ async function fetchBooks() {
 }
 
 //REDIRECCION A LAS DIFERENTES CATEGORIAS DE LIBROS
- function  redirectToCategory() {
-  const pendingBooks = document.getElementById("pending");
+function  redirectToCategory() {
+  const pendingBooks = document.getElementById("pendings");
   const actualBooks = document.getElementById("actuals");
   const readedBooks = document.getElementById("readed");
 
   const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+  console.log("pendingBooks:", pendingBooks);
+  console.log("actualBooks:", actualBooks);
+  console.log("readedBooks:", readedBooks);
 
   //redireccion a la pagina de libros pendientes
   pendingBooks.addEventListener("click", async () => {
