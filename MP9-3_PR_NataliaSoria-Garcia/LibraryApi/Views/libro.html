@@ -9,56 +9,31 @@
 <body>
     <div class="app-container">
 
-            <div class="app-container">
-        <nav>
-            <img src="../public/img/logo.png" alt="logo">
-            <div class="right-links float-right mr-4">
-                <a href="#" class="home"><i class="fa fa-home mr-3"></i></a>
-                <div class="d-inline dropdown mr-3">   
-                </div> <!-- /.dropdown -->
-                    <div class="d-inline dropdown">
-                        <a class="dropdown-toggle" id="messages" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
-                            <img src="http://1.gravatar.com/avatar/47db31bd2e0b161008607d84c74305b5?s=96&d=mm&r=g">
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right rounded-0" aria-labelledby="messages">
-                            <a class="dropdown-item" href="#">Edit my profile</a>
-                            <a class="dropdown-item" href="#">Log Out</a>
-                        </div> <!-- /.dropdown-menu -->
-                    </div> <!-- /.dropdown -->
-                </div>
-            </div>
-        </nav>
-        
         <aside class="sidebar">
             <nav>
-                <a href="index.html"><img src="../public/img/logo.png" alt="logo"></a>
+                <a href="index.html"><img src="/img/logo.png" alt="logo"></a>
                 <ul>
-                    <li><a href="index.html">HOME</a></li>
-                    <li><a href="categoria.html/{1}">Pendientes</a></li>
-                    <li><a href="categoria.html/{2}">Actuales</a></li>
-                    <li><a href="categoria.html/{3}">Finalizados</a></li>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="#" id="pendings" >Pendientes</a></li>
+                    <li><a href="#" id="actuals">Actuales</a></li>
+                    <li><a href="#" id="readed">Finalizados</a></li>
                 </ul>
             </nav>
         </aside>
-    </div>
-      
+
         <main class="main-content">
 
             <header class="main-header">
-                <input type="text" placeholder="Buscar..." class="search-bar" />
+                <form id="searchForm">
+                    <input type="text" placeholder="Buscar..." class="search-bar" />
+                    <button class="searchButton">🔍</button>
+                </form>
                 <div class="nav-buttons">
-                    <a href="#">🔍</a>
-                    <div class="user-menu">
-                        <a href="#" class="user-icon">👤</a>
-                        <div class="dropdown-menu">
-                            <a href="#">Iniciar sesión</a>
-                            <a href="#">Registrarse</a>
-                        </div>
+                    <a href="/profile" class="user-icon">👤</a>
+                    <a href="/FQ">F&Q</a>
+                    <div class="cerrar-sesion" id="logout-btn">
+                        <a href="#"><img src="/img/cerrar-sesion.png" alt="icono cerrar sesion"></a>
                     </div>
-                    <a href="FQ.html">F&Q</a>
-                    <a href="#" class="cerrar-sesion">
-                        <img src="../public/img/cerrar-sesion.png" alt="icono cerrar sesion">
-                    </a>
                 </div>
             </header>
 
@@ -117,7 +92,7 @@
         </main>
     </div>
 
-<script src="../public/js/index.js"></script>
+<script src="/js/index.js"></script>
 
 
 </body>

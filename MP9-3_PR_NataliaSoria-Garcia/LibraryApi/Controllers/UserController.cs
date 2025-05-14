@@ -50,6 +50,17 @@ namespace LibraryApi.Controllers
 
                 return Ok(new {userExists});
         }
+
+        //RECUPERAR USUARIO POR ID
+        [HttpGet("GetUserID")]
+        public async Task<ActionResult<UserItem>> GetUserID([FromQuery] int id)
+        {        
+                var userExists = await _context.UserItems.FindAsync(id);
+                if(userExists==null) return NotFound();
+
+                return Ok(new {userExists});
+        }
+
      
         [AllowAnonymous] 
         // REGRISTRAR UN NUEVO USUARIO
@@ -68,29 +79,47 @@ namespace LibraryApi.Controllers
         [AllowAnonymous] 
         // PUT: api/User/
         //Actualizar la info del usuario
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserItem(int id, UserItem userItem)
+        [HttpPut("UpdateUser")]
+        public async Task<IActionResult> PutUserItem([FromBody] UserItem userItem)
         {
             //confirmamso que el id del usuario activo en la sesion sea el mismo del usuario que vamos a modificar
-            if (id != userItem.Id)
+            if ( userItem ==null)
             {
                 return BadRequest();
             }
 
-            _context.Entry(userItem).State = EntityState.Modified;
+            var existingUser = await _context.UserItems.FindAsync(userItem.Id);
 
+            if(existingUser==null)
+            {
+                return NotFound(new {message="usuario no encontrado"});
+            }
+            //actualizamos la informacion
+            if (!string.IsNullOrWhiteSpace(userItem.Nickname) && userItem.Nickname != existingUser.Nickname)
+            {
+                existingUser.Nickname = userItem.Nickname;
+            }
+            if (!string.IsNullOrWhiteSpace(userItem.Email) && userItem.Email != existingUser.Email)
+            {
+                existingUser.Email = userItem.Email;
+            }
+            if (!string.IsNullOrWhiteSpace(userItem.Password) && !BCrypt.Net.BCrypt.Verify(userItem.Password, existingUser.Password))
+            {
+                existingUser.Password = BCrypt.Net.BCrypt.HashPassword(userItem.Password);
+            }
+                      
+            
             try
             {
                 await _context.SaveChangesAsync();
+                return Ok(new { message = "Usuario actualizado correctamente.", user = existingUser });
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException e)
             {
-            
-                return NotFound();
+                 return StatusCode(500, new { message = "Error al guardar los cambios", detail = e.Message });
 
             }
 
-            return NoContent();
         }
 
         [AllowAnonymous] 

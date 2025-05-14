@@ -163,6 +163,11 @@ async Task MainAsync()
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "libro.html");
         await context.Response.SendFileAsync(filePath);
     });
+    app.MapGet("/profile",async context=>
+    {
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Views", "user.html");
+        await context.Response.SendFileAsync(filePath);
+    });
 
 
     //levantamos la aplicacion

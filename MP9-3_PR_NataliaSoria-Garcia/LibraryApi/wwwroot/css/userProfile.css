@@ -1,0 +1,239 @@
+
+/* LOGIN Y REGISTER */
+
+#loginButton {
+  font-family: 'Press Start', sans-serif;
+  font-size: 1rem;
+  color: var(--color-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+#loginButton:hover {
+  color: black;
+}
+
+.toggle-buttons{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+  gap: 30px;
+}
+
+.toggle-buttons button:hover{
+  background-color: white !important;
+  color: black;
+}
+
+
+.close {
+  font-size: 24px;
+  cursor: pointer;
+  position: sticky;
+  display:flex;
+  justify-content: flex-end;
+  color: var(--color-text);
+  color:white;
+}
+
+.close:hover {
+  color: var(--color-primary);
+}
+
+
+/*  PAGINA INDEX */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f4f4f4;
+  color: #333;
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  background: #333;
+  color: #fff;
+  width: 200px;
+  padding: 20px;
+  align-items: center;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin: 20px 0;
+}
+
+.sidebar a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.sidebar img{
+  width: 150px;
+  height: 150px;
+  align-items: flex-start;
+  position: relative;
+  top: -30px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.search-bar {
+  padding: 8px 12px;
+  width: 250px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.nav-buttons a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+/* MAIN */
+#app{
+    background-image: url('/img/fondoUserProfile.jpg');
+    height: 90%;
+    align-items: center;
+}
+
+.container {
+    margin:auto;
+    padding: 2%;
+    width: 70%;
+    height: 70%;
+    background-color: rgba(127, 255, 212, 0.797);
+    border-radius: 10%;
+}
+
+.userInformation{
+    background-color: antiquewhite;
+    padding: 3%;
+    width: 100%;
+    height: 100%;
+    border-radius: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+label{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 20px;
+    color:rgb(3, 77, 77);
+    font-weight: bolder;
+    margin:3%;
+}
+
+#change
+{
+    margin:3%;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 15px;
+    font-weight:lighter;
+}
+
+.submitForm{
+	align-self: center;
+	appearance: none;
+	outline: 0;
+	background-color: white;
+	border: solid 1px #145238;
+    border-radius: 15%;
+	padding: 10px 15px;
+	color: #53e3a6;
+	border-radius: 3px;
+	width: 250px;
+	cursor: pointer;
+	font-size: 18px;
+	transition-duration: 0.25s;
+	z-index: 2;
+    position: relative;
+    margin:3%;
+}
+
+.submit:hover{
+	background-color: rgb(245, 247, 249);
+}
+#saveButton:hover{
+    background-color: rgba(60, 217, 162, 0.995);
+    color:rgb(245, 247, 249);
+}
+#cancelButton:hover{
+    background-color: rgb(233, 49, 49);
+    color:rgb(245, 247, 249);
+}
+/* USUARIO */
+
+.user-icon{
+  filter:brightness(0);
+}
+
+.main-header .nav-buttons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.main-header .nav-buttons .user-menu .dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 70px;
+  top: 60px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  padding: 10px;
+}
+
+.main-header .nav-buttons .user-menu .dropdown-menu a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+  margin: auto;
+}
+
+.main-header .nav-buttons .user-menu .dropdown-menu a:hover {
+  background-color: #f0f0f0;
+}
+
+.main-header .nav-buttons .user-menu .dropdown-menu.show {
+  display: block;
+}
+
+.cerrar-sesion img{
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}

@@ -39,5 +39,20 @@ public class LibraryItemsController : ControllerBase
         .ToListAsync();
     }
 
+
+    // RECUPERAR LIBRO POR ID
+    [HttpGet("GetOneBooks/{book_id}")]
+
+    //DEVOLVEMOS TODOS LOS LIBROS DE NUESTRA BBDD
+    public async Task<ActionResult<LibraryItem>> GetOneBooks(int book_id)
+    {
+        var book = await _context.LibraryItems.FindAsync(book_id);
+         if (book == null)
+        {
+            return NotFound();
+        }
+        return book;
+    }
+
 }
 

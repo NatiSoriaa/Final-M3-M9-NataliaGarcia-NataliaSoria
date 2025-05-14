@@ -45,7 +45,7 @@ namespace LibraryApi.Controllers
         [HttpGet("id/{id}")]
         public async Task<ActionResult<UserBookItem>> GetUserBookItem(int id)
         {
-            var userBookItem = await _context.UserBookItems.FindAsync(id);
+            var userBookItem = await _context.UserBookItems.Where(book => book.BookId==id).FirstOrDefaultAsync();
 
             if (userBookItem == null)
             {
