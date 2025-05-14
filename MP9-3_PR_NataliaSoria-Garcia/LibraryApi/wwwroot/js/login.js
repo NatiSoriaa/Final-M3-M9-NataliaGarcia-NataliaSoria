@@ -48,14 +48,13 @@ window.onload = function() {
 		const nickname = document.getElementById('reg-user').value;
 		const email = document.getElementById('reg-email').value;
 		const password = document.getElementById('reg-pass').value;
-		const user = await GetUserByNickname(email, password);
-
+		const user = await checkUserExists(nickname, email );
+		console.log(user);
 		if (user) {
 			alert("Ya existe un usuario en nuestra BBDD con ese nickmane o email.");
-			window.location.href = "/login";
-
+			return;
 		}
-		if(user == null) {
+		else {
 			
 			const newUser={
 				nickname: nickname,
@@ -72,20 +71,15 @@ window.onload = function() {
 					body: JSON.stringify(newUser)
 				});
 
-				if (!createUserResponse.id) {
-					alert("Error al crear el usuario");
-					throw new Error('Error al crear el usuario');
-				}
-				else {
-					document.getElementById('register-modal').style.display = 'none';
-					alert("Usuario creado correctamente");
-					localStorage.setItem('loggedUser', JSON.stringify(user));
-					window.location.href = "/home";
-				}
+				
+				document.getElementById('register-modal').style.display = 'none';
+				alert("Usuario creado correctamente");
+				return;
+				
 			}
 			catch (error) {
 				alert("Error al crear el usuario");
-				window.location.href = "/login";
+				return;
 			}
 			
 		}	
@@ -158,6 +152,7 @@ window.onload = function() {
 }
 
 // FUNCIONES
+//funcion para login
 async function GetUserByNickname(nickname, password) {
     try {
         const response = await fetch(`/api/User/GetUserByNickname?nickname=${nickname}&password=${password}`);
@@ -171,4 +166,19 @@ async function GetUserByNickname(nickname, password) {
         console.error(error);
         return null;
     }
+}
+
+//funcion para register
+async function checkUserExists(nickname, email) {
+ 
+	const response = await fetch(`/api/User/UserExists?nickname=${nickname}&email=${email}`);
+	if(!response.ok)
+	{
+		throw new Error("Error al comprobar si el usuario existe");
+	}
+	const userExists=await response.json();
+	console.log("Respuesta existencia usuario:",userExists);
+
+	return userExists.userExists;
+
 }

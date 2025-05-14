@@ -5,86 +5,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FAQ - Preguntas Frecuentes</title>
     <link rel="stylesheet" href="/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="app-container">
 
-    <aside class="sidebar">
-        <nav>
-            <a href="index.html"><img src="/img/logo.png" alt="logo"></a>
-            <ul>
-                <li><a href="/home">Home</a></li>
-                <li><a href="#" id="pendings" >Pendientes</a></li>
-                <li><a href="#" id="actuals">Actuales</a></li>
-                <li><a href="#" id="readed">Finalizados</a></li>
-            </ul>
-        </nav>
-    </aside>
+        <aside class="sidebar">
+            <nav>
+                <a href="index.html"><img src="/img/logo.png" alt="logo"></a>
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="#" id="pendings" >Pendientes</a></li>
+                    <li><a href="#" id="actuals">Actuales</a></li>
+                    <li><a href="#" id="readed">Finalizados</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-    <main class="main-content">
+        <main class="main-content">
 
-        <header class="main-header">
-            <input type="text" placeholder="Buscar..." class="search-bar" />
-            <div class="nav-buttons">
-                <a href="#">🔍</a>
-                <div class="user-menu">
+            <header class="main-header">
+                <form id="searchForm">
+                    <input type="text" placeholder="Buscar..." class="search-bar" />
+                    <button class="searchButton">🔍</button>
+                </form>
+                <div class="nav-buttons">
                     <a href="#" class="user-icon">👤</a>
-                    <div class="dropdown-menu">
-                        <a href="#">Iniciar sesión</a>
-                        <a href="#">Registrarse</a>
+                    <a href="FQ.html">F&Q</a>
+                    <div class="cerrar-sesion" id="logout-btn">
+                        <a href="#"><img src="/img/cerrar-sesion.png" alt="icono cerrar sesion"></a>
                     </div>
                 </div>
-                <a href="FQ.html">F&Q</a>
-                <a href="#" class="cerrar-sesion">
-                    <img src="/img/cerrar-sesion.png" alt="icono cerrar sesion">
-                </a>
+            </header>
+
+            <div class="main-header-FQ">
+                <h1>F&Q</h1>
             </div>
-        </header>
 
-        <div class="main-header-FQ">
-            <h1>F&Q</h1>
-        </div>
+            <div class="faq-page">
 
-        <div class="faq-page">
+            <div class="faq-section">
+                <details>
+                    <summary>¿Quiénes somos?</summary>
+                    <p>Somos una plataforma para ayudarte a gestionar tus lecturas, seguir tu progreso y descubrir nuevas historias.</p>
+                </details>
+            
+                <details>
+                    <summary>Me equivoqué agregando un libro</summary>
+                    <p>Puedes eliminarlo desde la página de detalle del libro o en tus lecturas.</p>
+                </details>
+            
+                <details>
+                    <summary>Cambiar email</summary>
+                    <p>Ve a tu perfil para modificar tus datos de usuario.</p>
+                </details>
+            </div>
 
-        <div class="faq-section">
-            <details>
-                <summary>¿Quiénes somos?</summary>
-                <p>Somos una plataforma para ayudarte a gestionar tus lecturas, seguir tu progreso y descubrir nuevas historias.</p>
-            </details>
-          
-            <details>
-                <summary>Me equivoqué agregando un libro</summary>
-                <p>Puedes eliminarlo desde la página de detalle del libro o en tus lecturas.</p>
-            </details>
-          
-            <details>
-                <summary>Cambiar email</summary>
-                <p>Ve a tu perfil para modificar tus datos de usuario.</p>
-            </details>
-        </div>
+            <div class="contact-form">
+                <h3>Contácta con nosotros</h3>
+                <form>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required />
 
-        <div class="contact-form">
-            <h3>Contácta con nosotros</h3>
-            <form>
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required />
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required />
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required />
+                    <label for="mensaje">Mensaje:</label>
+                    <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
 
-                <label for="mensaje">Mensaje:</label>
-                <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
-
-                <button type="submit">ENVIAR</button>
-            </form>
-        </div>
+                    <button id="contactButton"type="submit">ENVIAR</button>
+                </form>
+            </div>
+        </main>
+        
     </div>
-    </main>
-    
-</div>
 
-<script src="/js/index.js"></script>
-
+<script src="/js/FQ.js"></script>
 </body>
+<script>
+    //verificamos si el usuario ya ha iniciado sesión
+    const loggedUser = localStorage.getItem('loggedUser');
+    if (!loggedUser || loggedUser === 'null' || loggedUser === '') {
+        Swal.fire({
+            title: "Debe estear logueado para acceder a esta página",
+            imageUrl: "https://c.tenor.com/1FV-IcFk-uMAAAAC/tenor.gif",
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: "Custom image",
+            confirmButtonText: "Ir al login",
+            //esto es para que el fondo quede en blur
+             backdrop: `
+                rgba(0,0,0,0.4)
+                left top
+                no-repeat
+                fixed
+            `,
+            showClass: {
+                popup: `
+                animate__animated
+                animate__fadeInUp
+                animate__faster
+                `
+            },
+            hideClass: {
+                popup: `
+                animate__animated
+                animate__fadeOutDown
+                animate__faster
+                `
+            },
+            //esto es para activar y desactivar el blur del fondo:
+            didOpen: () => {
+                document.getElementById('page-content').style.filter = 'blur(5px)';
+            },
+            willClose: () => {
+                document.getElementById('page-content').style.filter = 'none';
+            }
+            }).then(() => {
+            window.location.href = "/login"; 
+        });
+    }
+
+    
+    
+    
+</script>
 </html>

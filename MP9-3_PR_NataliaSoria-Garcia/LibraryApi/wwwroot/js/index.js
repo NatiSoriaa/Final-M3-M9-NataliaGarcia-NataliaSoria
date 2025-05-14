@@ -176,10 +176,11 @@ function setupDropdown() {
 function setupLogout() {
   document.getElementById("logout-btn").addEventListener("click", (e) =>{
   e.preventDefault();
-  localStorage.removeItem("loggedEmail");
+  localStorage.removeItem("loggedUser");
   window.location.href = "/login"; 
   });
 }
+
 
 
 

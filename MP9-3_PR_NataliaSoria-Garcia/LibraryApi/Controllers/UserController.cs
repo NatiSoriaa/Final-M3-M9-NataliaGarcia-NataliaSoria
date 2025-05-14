@@ -29,7 +29,8 @@ namespace LibraryApi.Controllers
 
                 if (userExists == null || !BCrypt.Net.BCrypt.Verify(password, userExists.Password))
                 {
-                    return Unauthorized("Credenciales incorrectas.");
+                    return Unauthorized(new { message = "Credenciales incorrectas." });
+
                 }
 
                 return Ok(new { message = "Login correcto", id = userExists.Id});
@@ -38,6 +39,16 @@ namespace LibraryApi.Controllers
             {
                 return StatusCode(500, $"Error del servidor: {ex.Message}");
             }
+        }
+
+        [AllowAnonymous] 
+        //REVIRAR SI EL USUARIO YA EXISTE
+        [HttpGet("UserExists")]
+        public async Task<ActionResult> UserExists([FromQuery] string nickname, [FromQuery] string email)
+        {        
+                var userExists = await _context.UserItems.AnyAsync(x => x.Nickname == nickname || x.Email==email);
+
+                return Ok(new {userExists});
         }
      
         [AllowAnonymous] 
