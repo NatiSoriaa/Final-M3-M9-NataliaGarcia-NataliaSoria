@@ -123,14 +123,18 @@ body {
 #app{
     background-image: url('/img/fondoUserProfile.jpg');
     height: 90%;
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
 .container {
-    margin:auto;
     padding: 2%;
     width: 70%;
     height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: rgba(127, 255, 212, 0.797);
     border-radius: 10%;
 }

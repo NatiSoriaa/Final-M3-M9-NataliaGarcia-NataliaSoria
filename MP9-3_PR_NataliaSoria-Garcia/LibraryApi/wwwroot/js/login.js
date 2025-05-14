@@ -156,10 +156,10 @@ window.onload = function() {
 async function GetUserByNickname(nickname, password) {
     try {
         const response = await fetch(`/api/User/GetUserByNickname?nickname=${nickname}&password=${password}`);
-        // if (!response.ok) {
-		// 	alert("Usuario no encontrado o contraseña incorrecta");
-        //     throw new Error('Usuario no encontrado o contraseña incorrecta');
-        // }
+        if (!response.ok) {
+			alert("Usuario no encontrado o contraseña incorrecta");
+            throw new Error('Usuario no encontrado o contraseña incorrecta');
+        }
         const user = await response.json();
         return user;
     } catch (error) {

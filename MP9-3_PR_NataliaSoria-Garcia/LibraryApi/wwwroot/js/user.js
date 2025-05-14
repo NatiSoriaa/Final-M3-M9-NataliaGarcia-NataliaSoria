@@ -100,7 +100,7 @@ function Person({user}) {
             </label> 
             
             
-            <button type="submit" className="submitForm" id={(!edit) ? "editButton" :"saveButton" } onClick={edit ? handleSave : ()=>setEdit(!edit)} >{edit ? 'Save Profile' :'Edit Profile'}</button>
+            <button type="submit" className="submitForm" id={(!edit) ? "editButton" :"saveButton" } onClick={edit ? handleSave : ()=>setEdit(!edit)} >{edit ? 'Guardar cambios' :'Editar perfil'}</button>
     
             <button type="submit" className="submitForm" id="cancelButton" style={{visibility:(!edit)?'hidden':'visible'}} onClick={()=>setEdit(!edit)}>Cancelar</button>
         </div>

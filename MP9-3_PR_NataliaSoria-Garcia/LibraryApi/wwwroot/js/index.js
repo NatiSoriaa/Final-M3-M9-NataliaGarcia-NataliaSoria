@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // setupModalEvents();
     setupLogout();
     setupRatings();
-    setupDropdown();
     fetchLastBooksCarousel();
     redirectToCategory();
 });
@@ -152,23 +151,6 @@ function setupRatings() {
 }
   
 
-// DROPDOWN MENU USER 
-
-function setupDropdown() {
-  const userIcon = document.querySelector(".user-icon");
-  const dropdownMenu = document.querySelector(".dropdown-menu");
-
-  userIcon.addEventListener("click", (event) => {
-    event.preventDefault(); 
-    dropdownMenu.classList.toggle("show"); 
-  });
-
-  document.addEventListener("click", (event) => {
-    if (!userIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
-      dropdownMenu.classList.remove("show");
-    }
-  });
-};
 
 
 // LOGIN Y REGISTER
