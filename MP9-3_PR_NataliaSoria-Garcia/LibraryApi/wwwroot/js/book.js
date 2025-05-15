@@ -57,7 +57,7 @@
     console.log("ID libro: ",bookId);
     
     const infoLibro= await searchBookInformation(bookId);
-    const comentarios = await searchBookComents(bookId,loggedUser.id);
+    const comentarios = await searchBookComents(bookId);
     const descripcion= await BookDescription (infoLibro.title);
 
     ReactDOM.render(<Book book={infoLibro} descripcion={descripcion} coments={comentarios} userID={loggedUser.id} />, document.getElementById('app'));
@@ -70,6 +70,7 @@
 
 //COMPONENTE PAGINA
 function Book({book,descripcion,coments,userID}){
+    console.log("comentarios: ",coments)
     return (
         <div className="main-header-libro">
             <h1 className="category-title">{book.title}</h1>
@@ -110,6 +111,8 @@ function Coments({coments, book, userID})
     const comentarioUser = coments.find(c => c.userId === userID);
     const comentarios = coments.filter(c => c.userId !== userID);
 
+    console.log("comentarios resto usuarios: ",comentarios);
+    
     const handlePuntuar = (value) =>{
         setRating(value==rating?0:value);
     };
@@ -179,18 +182,20 @@ function Coments({coments, book, userID})
 
             {comentarios && comentarios.length > 0 && comentarios.map((coment, index) => {
                 console.log("Comentario ",coment);
-                <div className="review" key={index}>
-                    <p><strong>Nickname:</strong> {coment.nickname}</p>
-                    <div className="rating" data-book-id="123">
-                        <span className="star" data-value="1">☆</span>
-                        <span className="star" data-value="2">☆</span>
-                        <span className="star" data-value="3">☆</span>
-                        <span className="star" data-value="4">☆</span>
-                        <span className="star" data-value="5">☆</span>
+                return(
+                    <div className="review" key={index}>
+                        <p><strong>Nickname:</strong> {coment.nickname}</p>
+                        <div className="rating" data-book-id="123">
+                            <span className="star" data-value="1">☆</span>
+                            <span className="star" data-value="2">☆</span>
+                            <span className="star" data-value="3">☆</span>
+                            <span className="star" data-value="4">☆</span>
+                            <span className="star" data-value="5">☆</span>
+                        </div>
+                        <p>Comentario:</p>
+                        <p>{coment.comment}</p>
                     </div>
-                    <p>Comentario:</p>
-                    <p>{coment.Comment}</p>
-                </div>
+                )
                 })
             }
             
@@ -256,33 +261,40 @@ async function searchBookInformation(bookId)
     return infoLibro;
 }
 
-async function searchBookComents(bookId,userId)
+async function searchBookComents(bookId)
 {
-    //Recuperar comentarios
-    console.log("...comenzando fecth comentarios libro...");
-    const comentsData = await fetch(`/api/UserBook?id_book=${bookId}`);
-    if (!comentsData.ok) {
-      throw new Error('Error al obtener los comentarios del libro');
-    }
-    
-    const listaComentarios = await comentsData.json();
-    console.log("Comentarios actuales: ",listaComentarios);
-    
-    //buscar a los usuarios de esos comentarios
-    const listaComentariosConNicknames= await Promise.all(
-        listaComentarios.map(async (coment) =>{
-            if(coment.userId!=userId){
-                const searchUser = await fetch(`/api/User/GetUserID?id=${coment.userId}`);
-                
+    try{
+        //Recuperar comentarios
+        console.log("...comenzando fecth comentarios libro...");
+        const comentsData = await fetch(`/api/UserBook?id_book=${bookId}`);
+        if (!comentsData.ok) {
+            throw new Error('Error al obtener los comentarios del libro');
+        }
+
+        const listaComentarios = await comentsData.json();
+        console.log("Comentarios actuales: ",listaComentarios);
+
+        //buscar a los usuarios de esos comentarios
+        const listaComentariosConNicknames= await Promise.all(
+            listaComentarios.map(async (coment) =>{
+                const searchUser = await fetch(`/api/User/GetUserID?id=${coment.userId}`);           
                 const userData = await searchUser.json();
                 const nickname = userData.userExists.nickname
                 return {
+                    id: coment.id, 
+                    userId: coment.userId,
                     nickname,
-                    comment: coment.coment,
+                    comment: coment.comment,
                     rating: coment.rating
-                };}
-    }));
-    return listaComentariosConNicknames;
+                }
+        }));
+        console.log("comentarios crudos:", listaComentarios);
+        return listaComentariosConNicknames;
+    }
+    catch(e)
+    {
+        throw new Error(e)
+    }
 }
 
 async function BookDescription (bookTitle)

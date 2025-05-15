@@ -24,19 +24,20 @@ namespace LibraryApi.Controllers
 
         // GET: COMENTARIOS DE UN LIBRO
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Comment>>> GetBookComents(int id_book)
+        public async Task<ActionResult<IEnumerable<object>>> GetBookComents(int id_book)
         {
-            List<UserBookItem> userBookItem = await _context.UserBookItems.Where(x => x.BookId == id_book).ToListAsync();
-            List<Comment> ListComents= new List<Comment>();
-            foreach(UserBookItem item in userBookItem)
+            var userBookItems = await _context.UserBookItems
+            .Where(x => x.BookId == id_book && x.Comment != null)
+            .Select(x => new
             {
-                if (item.Comment != null)
-                {
-                    
-                    ListComents.Add(new Comment { userId = item.UserId, comment = item.Comment });
-                }
-            }
-            return ListComents;
+                id = x.Id,
+                userId = x.UserId,
+                comment = x.Comment,
+                rating = x.Rating
+            })
+            .ToListAsync();
+           
+            return Ok(userBookItems);
 
             
         }
@@ -90,8 +91,8 @@ namespace LibraryApi.Controllers
         }
 
         // Actualizar el estado del libro
-        [HttpPut("{status,comment,rating}")]
-        public async Task<ActionResult<UserBookItem>> PutUserBookItem(int id, string status, string comment, int rating)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<UserBookItem>> PutUserBookItem(int id, [FromQuery] string status, [FromQuery] string comment, [FromQuery] int rating)
         {
             var userBookItem = await _context.UserBookItems.FindAsync(id);
 
