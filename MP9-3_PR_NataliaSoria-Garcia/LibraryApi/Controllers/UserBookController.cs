@@ -17,9 +17,10 @@ namespace LibraryApi.Controllers
         private readonly UserBookContext _context;
         private readonly LibraryContext _libraryContext;
 
-        public UserBookController(UserBookContext context)
+        public UserBookController(UserBookContext context,LibraryContext libraryContext)
         {
             _context = context;
+            _libraryContext = libraryContext;
         }
 
         // GET: COMENTARIOS DE UN LIBRO
@@ -94,22 +95,30 @@ namespace LibraryApi.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<UserBookItem>> PutUserBookItem(int id, [FromQuery] string status, [FromQuery] string comment, [FromQuery] int rating)
         {
-            var userBookItem = await _context.UserBookItems.FindAsync(id);
+            try{
+                var userBookItem = await _context.UserBookItems.FindAsync(id);
 
-            if (userBookItem == null)
-            {
-                return NotFound();
+                if (userBookItem == null)
+                {
+                    return NotFound();
+                }
+
+                //Modificamos el estado en caso de que recibamos valor y este sea diferente al actual
+                if(status!="" && status!=userBookItem.Status) userBookItem.Status = status;
+                if(comment!="" && comment!=userBookItem.Comment) userBookItem.Comment = comment;
+                if(rating!=0 && rating!=userBookItem.Rating) userBookItem.Rating = rating;
+
+                _context.Entry(userBookItem).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                await ActualizarPuntuacionLibro(userBookItem.BookId);
+
+                return NoContent();
             }
-
-            //Modificamos el estado en caso de que recibamos valor y este sea diferente al actual
-            if(status!="" && status!=userBookItem.Status) userBookItem.Status = status;
-            if(comment!="" && comment!=userBookItem.Comment) userBookItem.Comment = comment;
-            if(rating!=0 && rating!=userBookItem.Rating) userBookItem.Rating = rating;
-
-            _context.Entry(userBookItem).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Error en PUT UserBook: {ex.Message}");
+                return StatusCode(500, "Error interno del servidor.");
+            }
         }
         
         // POST: Añadir un libro para el usuario
@@ -118,6 +127,7 @@ namespace LibraryApi.Controllers
         {
             _context.UserBookItems.Add(userBookItem);
             await _context.SaveChangesAsync();
+            await ActualizarPuntuacionLibro(userBookItem.BookId);
 
             return CreatedAtAction("GetUserBookItem", new { id = userBookItem.Id }, userBookItem);
         }
@@ -156,6 +166,28 @@ namespace LibraryApi.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+    
+
+        private async Task ActualizarPuntuacionLibro(int bookId)
+        {
+            var ratings = await _context.UserBookItems
+                .Where(x => x.BookId == bookId)
+                .Select(x => x.Rating)
+                .ToListAsync();
+
+            if (ratings.Count == 0)
+                return;
+
+            var media = ratings.Average();
+
+            var libro = await _libraryContext.LibraryItems.FindAsync(bookId);
+            if (libro != null)
+            {
+                libro.Puntuation = (int)Math.Round(media);
+                _libraryContext.Entry(libro).State = EntityState.Modified;
+                await _libraryContext.SaveChangesAsync();
+            }
         }
     }
 

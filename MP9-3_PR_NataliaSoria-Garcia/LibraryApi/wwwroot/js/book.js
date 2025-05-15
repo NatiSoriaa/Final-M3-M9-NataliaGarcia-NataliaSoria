@@ -72,32 +72,32 @@
 function Book({book,descripcion,coments,userID}){
     console.log("comentarios: ",coments)
     return (
-        <div className="main-header-libro">
+        <>
             <h1 className="category-title">{book.title}</h1>
-        
-            <section className="book-detail">
-                <div className="image-placeholder detail">
-                    <div className="author-Rating">
-                        <h4>Autor: {book.author}</h4>
-                        <div className="fixedRating" data-book-id="123">
-                            <span className="star" data-value="1">☆</span>
-                            <span className="star" data-value="2">☆</span>
-                            <span className="star" data-value="3">☆</span>
-                            <span className="star" data-value="4">☆</span>
-                            <span className="star" data-value="5">☆</span>
+            <div className="main-header-libro">    
+                <section className="book-detail">
+                    <div className="image-placeholder detail">
+                        <div className="author-Rating">
+                            <h4> {book.author}</h4>
+                            <div className="fixedRating" data-book-id="123">
+                                <span className="star" data-value="1">☆</span>
+                                <span className="star" data-value="2">☆</span>
+                                <span className="star" data-value="3">☆</span>
+                                <span className="star" data-value="4">☆</span>
+                                <span className="star" data-value="5">☆</span>
+                            </div>
                         </div>
+                        <img className="bookCover" src={book.urlcover}></img>
                     </div>
-                    <img className="bookCover" src={book.urlcover}></img>
-                </div>
-                <div className="book-data">
-                    <p className="description">
-                        {descripcion.items[0].volumeInfo.description}
-                    </p>
-                </div>
-            </section>
-            <Coments coments={coments} book={book} userID={userID}/>
-        </div>
-
+                    <div className="book-data">
+                        <p className="description">
+                            {descripcion.items[0].volumeInfo.description}
+                        </p>
+                    </div>
+                </section>
+                <Coments coments={coments} book={book} userID={userID}/>
+            </div>
+        </>
     )
 }
 
@@ -184,15 +184,12 @@ function Coments({coments, book, userID})
                 console.log("Comentario ",coment);
                 return(
                     <div className="review" key={index}>
-                        <p><strong>Nickname:</strong> {coment.nickname}</p>
+                        <p><strong> {coment.nickname}</strong></p>
                         <div className="rating" data-book-id="123">
-                            <span className="star" data-value="1">☆</span>
-                            <span className="star" data-value="2">☆</span>
-                            <span className="star" data-value="3">☆</span>
-                            <span className="star" data-value="4">☆</span>
-                            <span className="star" data-value="5">☆</span>
+                            {[1,2,3,4,5].map(val => (
+                                <span className="star" key={val}>{val <= coment.rating ? "★" : "☆"}</span>
+                            ))}
                         </div>
-                        <p>Comentario:</p>
                         <p>{coment.comment}</p>
                     </div>
                 )
@@ -201,7 +198,7 @@ function Coments({coments, book, userID})
             
             <hr />
             {comentarioUser && !editing && (
-                <div className="review">
+                <div className="review user-comment">
                     <p><strong>Tu comentario:</strong></p>
                     <div className="rating">
                         {[1, 2, 3, 4, 5].map(val => (
@@ -242,6 +239,7 @@ function Coments({coments, book, userID})
                     />
 
                     <button type="submit">{comentarioUser ? "Actualizar" : "Publicar"}</button>
+                    <button type="submit" style={{ visibility: comentarioUser ? "visible" : "hidden" }} onClick={()=>setEditing(!editing)}>Cancelar</button>
                 </form>
             )}
         </section>

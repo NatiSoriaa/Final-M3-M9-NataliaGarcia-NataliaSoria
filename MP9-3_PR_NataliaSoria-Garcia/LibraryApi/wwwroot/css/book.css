@@ -1,9 +1,10 @@
 
 /* LOGIN Y REGISTER */
 
-#loginButton {
+button {
   font-family: 'Press Start', sans-serif;
   font-size: 1rem;
+  margin:3%;
   color: var(--color-text);
   background: none;
   border: none;
@@ -11,7 +12,7 @@
   transition: color 0.3s ease;
 }
 
-#loginButton:hover {
+button:hover {
   color: black;
 }
 
@@ -67,21 +68,36 @@ body {
   color: #fff;
   width: 200px;
   padding: 20px;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
 }
 
-.sidebar ul {
-  list-style: none;
+.sidebar nav {
+  width: 100%;
 }
 
-.sidebar li {
-  margin: 20px 0;
+.sidebar ul  {
+ list-style: none;
+  padding: 0;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: flex-end;
+}
+
+.sidebar li  {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .sidebar a {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
+  padding-right: 10px;
 }
 
 .sidebar img{
@@ -120,6 +136,131 @@ body {
 }
 
 /* MAIN */
+
+.main-header-libro {
+  padding: 20px;
+}
+
+.category-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-align: left;
+  padding-right: 20px;
+}
+.author-Rating{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.fixedRating{
+  margin-left: 2%;
+  font-size: 30px;
+}
+
+.book-detail {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+
+.image-placeholder.detail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-placeholder.detail h4 {
+  margin-bottom: 10px;
+}
+
+.bookCover {
+  max-width: 300%;
+  max-height: 500px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+
+.book-data {
+  flex: 1;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+
+.reviews {
+  margin-top: 50px;
+}
+
+.review {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border: 1px solid #ddd;
+}
+
+.review p {
+  margin: 5px 0;
+}
+
+
+.review.user-comment {
+  margin-top: 40px;
+  border-color: #bbb;
+  background-color: #f9f9f9;
+}
+
+
+.review-form {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border: 1px solid #ccc;
+}
+
+.review-form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.review-form textarea {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.review-form button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #333;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.review-form button:hover {
+  background-color: #555;
+}
 
 
 
