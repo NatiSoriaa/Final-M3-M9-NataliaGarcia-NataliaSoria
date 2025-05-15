@@ -7,8 +7,14 @@ document.addEventListener("DOMContentLoaded", function () {
     redirectToCategory();
 });
 
+
+
   
 // Función para obtener los libros desde la API
+
+
+
+
 async function fetchBooks(loggedUser) {
     try {
         //recuperamos TODOS los libros
@@ -23,15 +29,31 @@ async function fetchBooks(loggedUser) {
 
         books.forEach(book => { 
             const bookCard = document.createElement('div');
-            bookCard.classList.add('book-card');
+            bookCard.classList.add('book-card', 'book-row');
+            bookCard.dataset.id = book.id;
             bookCard.innerHTML = `
-                <img src="${book.urlcover}" alt="${book.title}" class="book-cover">
-                <h3>${book.title}</h3>
-                <p>${book.author}</p>
-                <p>Año: ${book.publishedDate}</p>
+                <div class="image-placeholder small">
+                  <img src="${book.urlcover}" alt="${book.title}" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
+                </div>
+                <div class="book-info">
+                  <h3>${book.title}</h3>
+                  <p>${book.author}</p>
+                  <p>Año: ${book.publishedDate}</p>
+                </div>
+                <div class="book-action-dropdown">
+                  <button class="add-button">+</button>
+                  <div class="dropdown-content">
+                    <button class="dropdown-item" data-status="pendiente">➕ Pendiente</button>
+                    <button class="dropdown-item" data-status="actuales">📖 Actual</button>
+                    <button class="dropdown-item" data-status="leidos">✅ Finalizado</button>
+                  </div>
+                </div>
             `;
-            bookCard.addEventListener('click',()=>{
-              window.location.href = `/book?bookId=${book.id}`;
+            bookCard.addEventListener('click',(e)=>{
+              if (!e.target.classList.contains('add-button') &&
+                  !e.target.classList.contains('dropdown-item')) {
+                window.location.href = `/book?bookId=${book.id}`;
+              }
             });
             category1Container.appendChild(bookCard);
         });
@@ -41,7 +63,68 @@ async function fetchBooks(loggedUser) {
     }
 }
 
+
+
+
+// Evento global para los botones "+"
+
+
+
+
+document.addEventListener('click', function (e) {
+  if (e.target.classList.contains('add-button')) {
+    const dropdown = e.target.nextElementSibling;
+    dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
+    dropdown.style.flexDirection = 'column';
+    e.stopPropagation();
+  } else if (e.target.classList.contains('dropdown-item')) {
+    const status = e.target.dataset.status;
+    const bookRow = e.target.closest('.book-row');
+    const bookTitle = bookRow.querySelector('h3').innerText;
+    const bookId = bookRow.dataset.id;
+    const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+
+    fetch('http://localhost:5129/api/UserBook', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id_user: loggedUser.id,
+        id_book: parseInt(bookId),
+        state: status,
+        rating: 0
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        Swal.fire(`📚 "${bookTitle}" agregado a ${status}`);
+      } else {
+        Swal.fire("❌ Error al agregar el libro.");
+      }
+    })
+    .catch(error => {
+      console.error("Error al agregar libro:", error);
+    });
+
+    e.target.parentElement.style.display = 'none';
+    e.stopPropagation();
+  } else {
+    document.querySelectorAll('.dropdown-content').forEach(menu => {
+      menu.style.display = 'none';
+    });
+  }
+});
+
+
+
+
+
 //funcion carrusel imagenes de CODEPIN
+
+
+
+
 async function fetchLastBooksCarousel(loggedUser) {
     try {
       //recuperamos los 10 ultimos libros para añadirlos en el carrusel "ultimos añadidos"
@@ -100,7 +183,14 @@ function seeBook(bookid,userID)
   window.location.href = `/book?bookId=${bookid}&id_user=${userID}`;
 }
 
+
+
+
 //REDIRECCION A LAS DIFERENTES CATEGORIAS DE LIBROS
+
+
+
+
  function  redirectToCategory() {
   const pendingBooks = document.getElementById("pendings");
   const actualBooks = document.getElementById("actuals");
@@ -125,7 +215,14 @@ function seeBook(bookid,userID)
   });
 }
 
+
+
+
 //MODIFICAR ESTRELLAS
+
+
+
+
 function setupRatings() {
   document.querySelectorAll(".rating").forEach((rating) => {
     const stars = rating.querySelectorAll(".star");
@@ -159,11 +256,15 @@ function setupRatings() {
     });
   }
 }
-  
+
 
 
 
 // LOGIN Y REGISTER
+
+
+
+
 //deslogar usuario
 function setupLogout() {
   document.getElementById("logout-btn").addEventListener("click", (e) =>{

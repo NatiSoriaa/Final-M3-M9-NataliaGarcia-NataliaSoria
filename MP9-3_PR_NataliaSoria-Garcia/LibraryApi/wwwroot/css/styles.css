@@ -320,6 +320,58 @@ body {
 }
 
 
+/*  BOTONES AGREGAR LIBRO */
+
+.book-action-dropdown {
+  position: relative;
+  margin-left: auto;
+}
+
+.add-button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  width: 35px;
+  height: 35px;
+  font-size: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: #0056b3;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 45px;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  z-index: 1;
+  flex-direction: column;
+}
+
+.dropdown-item {
+  background: none;
+  border: none;
+  padding: 10px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+}
+
+
+
 /*  PAGINA LIBRO */
 
 .book-detail {

@@ -2,9 +2,16 @@
     setupLogout();
     setupRatings();
     redirectToCategory();
+    fetchBooks();
 });
 
+
+
+
 //RECUPERAR LOS DATOS E IMPRIMIRLOS
+
+
+
 
 async function fetchBooks() {
   const params = new URLSearchParams(window.location.search);
@@ -19,38 +26,48 @@ async function fetchBooks() {
     if (!response.ok) {
       throw new Error('Error al obtener los libros');
     }
-    else if (respponse.usersBooks.lenghth === 0) {
+    const books = await response.json();
+
+    if (!books || books.length === 0) {
       const noBooksMessage = document.createElement('p');
       noBooksMessage.textContent = 'Todavía no hay libros añadidos.';
+      noBooksMessage.style.marginTop = '20px';
+      noBooksMessage.style.fontSize = '18px';
+      noBooksMessage.style.textAlign = 'center';
+      category1Container.appendChild(noBooksMessage);
+      return;
     }
-    else
-    {
-      const data = await response.json();
 
-      const books = data.books;
-      const usersBooks = data.usersBooks;
+    books.forEach((book, index) => {
+      const bookCard = document.createElement('div');
+      bookCard.classList.add('book-card');
+      bookCard.innerHTML = `
+        <img src="${book.urlcover}" alt="${book.title}" class="book-cover">
+        <h3>${book.title}</h3>
+        <p>${book.author}</p>
+        <p>Año: ${book.publishedDate}</p>
+        <p>Rating: ${book[index].rating}</p>
+      `;
+      category1Container.appendChild(bookCard);
+    });
 
-      books.forEach((book , index)=> { 
-        const bookCard = document.createElement('div');
-        bookCard.classList.add('book-card');
-        bookCard.innerHTML = `
-            <img src="${book.urlcover}" alt="${book.title}" class="book-cover">
-            <h3>${book.title}</h3>
-            <p>${book.author}</p>
-            <p>Año: ${book.publishedDate}</p>
-            <p>Rating: ${usersBooks[index].rating}</p>
-        `;
-        category1Container.appendChild(bookCard);
-      });
-    }
-  }
-  catch (e)
-  {
-    console.error("Error al recuperar los libros")
+  } catch (e) {
+    console.error("❌ Error al recuperar los libros:", e);
+    const errorMessage = document.createElement('p');
+    errorMessage.textContent = 'Ocurrió un error al cargar los libros.';
+    errorMessage.style.color = 'red';
+    errorMessage.style.textAlign = 'center';
+    category1Container.appendChild(errorMessage);
   }
 }
 
+
+
 //REDIRECCION A LAS DIFERENTES CATEGORIAS DE LIBROS
+
+
+
+
 function  redirectToCategory() {
   const pendingBooks = document.getElementById("pendings");
   const actualBooks = document.getElementById("actuals");
@@ -75,7 +92,14 @@ function  redirectToCategory() {
   });
 }
 
+
+
+
 //MODIFICAR ESTRELLAS
+
+
+
+
 function setupRatings() {
   document.querySelectorAll(".rating").forEach((rating) => {
     const stars = rating.querySelectorAll(".star");
@@ -112,7 +136,12 @@ function setupRatings() {
   
 
 
+
 // LOGIN Y REGISTER
+
+
+
+
 //deslogar usuario
 function setupLogout() {
   document.getElementById("logout-btn").addEventListener("click", (e) =>{
