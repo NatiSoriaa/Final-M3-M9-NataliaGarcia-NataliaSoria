@@ -90,11 +90,13 @@ document.addEventListener('click', function (e) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        id_user: loggedUser.id,
-        id_book: parseInt(bookId),
-        state: status,
+        userId: loggedUser.id,
+        bookId: parseInt(bookId),
+        status: status,
+        comment: null,
         rating: 0
       })
+      
     })
     .then(response => {
       if (response.ok) {

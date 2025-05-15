@@ -1,17 +1,9 @@
 (async function () {
-    setupLogout();
-    setupRatings();
-    redirectToCategory();
-    fetchBooks();
-});
-
-
-
-
-//RECUPERAR LOS DATOS E IMPRIMIRLOS
-
-
-
+  setupLogout();
+  setupRatings();
+  redirectToCategory();
+  await fetchBooks(); // Esperamos que termine de cargar
+})();
 
 async function fetchBooks() {
   const params = new URLSearchParams(window.location.search);
@@ -19,35 +11,91 @@ async function fetchBooks() {
   const state = params.get("state");
 
   const category1Container = document.querySelector('.category-section .book-grid');
-  category1Container.innerHTML = ''; 
+  category1Container.innerHTML = '';
+
+  if (!userId || !state) {
+    console.error("❌ Faltan parámetros en la URL");
+    return;
+  }
+
+  const url = `/api/UserBook/state/${state}?id_user=${userId}`; // URL relativa para producción
+  console.log("📡 Haciendo fetch a:", url);
 
   try {
-    const response = await fetch(`http://localhost:5129/api/UserBook/state/${state}?id_user=${userId}`)
-    if (!response.ok) {
-      throw new Error('Error al obtener los libros');
-    }
-    const books = await response.json();
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Fetch fallido con código ${response.status}`);
+
+    const data = await response.json();
+    console.log("📦 Datos recibidos:", data);
+
+    const books = data.userLibraryBooks || data; 
+    const usersBooks = data.userBookItems || [];
 
     if (!books || books.length === 0) {
       const noBooksMessage = document.createElement('p');
       noBooksMessage.textContent = 'Todavía no hay libros añadidos.';
-      noBooksMessage.style.marginTop = '20px';
-      noBooksMessage.style.fontSize = '18px';
-      noBooksMessage.style.textAlign = 'center';
+      noBooksMessage.classList.add("no-books-message");
       category1Container.appendChild(noBooksMessage);
       return;
     }
 
     books.forEach((book, index) => {
+      const userBook = usersBooks.find(ub => ub.bookId === book.id);
+
+      if (!userBook) {
+        console.warn(`No se encontró el userBook para bookId ${book.id}`);
+        return; // evitar errores si falta userBook
+      }
+
       const bookCard = document.createElement('div');
-      bookCard.classList.add('book-card');
-      bookCard.innerHTML = `
-        <img src="${book.urlcover}" alt="${book.title}" class="book-cover">
-        <h3>${book.title}</h3>
-        <p>${book.author}</p>
-        <p>Año: ${book.publishedDate}</p>
-        <p>Rating: ${book[index].rating}</p>
-      `;
+      bookCard.classList.add(index === 0 ? 'featured-book' : 'book-row');
+
+      // Hacer que toda la tarjeta sea clicable excepto el botón eliminar:
+      bookCard.style.cursor = "pointer";
+
+      // Cuando se hace clic en el bookCard, redirigimos a la página detalle
+      bookCard.addEventListener('click', () => {
+        window.location.href = `/book?bookId=${book.id}`;
+      });
+
+      // HTML con botón eliminar (evitamos que el botón propague el clic a bookCard)
+      if (index === 0) {
+        bookCard.innerHTML = `
+          <div class="featured-cover">
+            <img src="${book.urlcover}" alt="${book.title}" />
+          </div>
+          <div class="featured-info">
+            <h2>${book.title}</h2>
+            <p>${book.author} • ${book.category}</p>
+            <p>${book.description ?? ''}</p>
+          </div>
+          <div class="delete-button">
+            <button class="action-button" aria-label="Eliminar libro">−</button>
+          </div>
+        `;
+      } else {
+        bookCard.innerHTML = `
+          <div class="image-placeholder small">
+            <img src="${book.urlcover}" alt="${book.title}" />
+          </div>
+          <div class="book-info">
+            <h3>${book.title}</h3>
+            <p>${book.author} • ${book.category}</p>
+            <p>${book.description ?? ''}</p>
+          </div>
+          <div class="delete-button">
+            <button class="action-button" aria-label="Eliminar libro">−</button>
+          </div>
+        `;
+      }
+
+      // Capturamos el botón para que no propague el clic a bookCard
+      const deleteBtn = bookCard.querySelector('button.action-button');
+      deleteBtn.addEventListener('click', (event) => {
+        event.stopPropagation(); // Evita que el clic llegue a bookCard
+        deleteBook(userBook.id);
+      });
+
       category1Container.appendChild(bookCard);
     });
 
@@ -60,6 +108,8 @@ async function fetchBooks() {
     category1Container.appendChild(errorMessage);
   }
 }
+
+
 
 
 
@@ -150,3 +200,31 @@ function setupLogout() {
   window.location.href = "/login"; 
   });
 }
+
+
+
+// ELIMINAR LIBRO
+
+
+
+async function deleteBook(bookId) {
+  if (!confirm("¿Estás seguro de que quieres eliminar este libro?")) return;
+
+  try {
+    const response = await fetch(`http://localhost:5129/api/UserBook/id/${bookId}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) throw new Error(`Error al eliminar libro: ${response.status}`);
+
+    console.log(`✅ Libro ${bookId} eliminado`);
+    await fetchBooks(); 
+
+  } catch (error) {
+    console.error("❌ Error al eliminar libro:", error);
+    alert("Ocurrió un error al eliminar el libro.");
+  }
+}
+
+
+
