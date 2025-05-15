@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalle del Libro</title>
     <link rel="stylesheet" href="/css/book.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
     <div class="app-container">
@@ -36,64 +40,11 @@
                     </div>
                 </div>
             </header>
-            <div class="app"></div>
-
-            <div class="main-header-libro">
-                <h1 class="category-title">TÍTULO LIBRO</h1>
-            </div>
-        
-            <section class="book-detail">
-                <div class="image-placeholder detail"></div>
-                <div class="book-data">
-                    <h2>TÍTULO LIBRO</h2>
-                    <h4>Autor: Nombre Autor</h4>
-                    <p class="description">
-                        Descripcion1...
-                    </p>
-                    <p class="description">
-                        Descipcion2...
-                    </p>
-                    <div class="rating" data-book-id="123">
-                      <span class="star" data-value="1">☆</span>
-                      <span class="star" data-value="2">☆</span>
-                      <span class="star" data-value="3">☆</span>
-                      <span class="star" data-value="4">☆</span>
-                      <span class="star" data-value="5">☆</span>
-                    </div>
-                </div>
-            </section>
-        
-          <section class="reviews">
-                <h3>Reseñas</h3>
-                <div class="review">
-                    <p><strong>Nombre:</strong> Usuario 1</p>
-                    <div class="rating" data-book-id="123">
-                        <span class="star" data-value="1">☆</span>
-                        <span class="star" data-value="2">☆</span>
-                        <span class="star" data-value="3">☆</span>
-                        <span class="star" data-value="4">☆</span>
-                        <span class="star" data-value="5">☆</span>
-                    </div>
-                    <p>Comentario: </p>
-                </div>
-
-                <div class="review">
-                    <p><strong>Nombre:</strong> Usuario 2</p>
-                    <div class="rating" data-book-id="123">
-                        <span class="star" data-value="1">☆</span>
-                        <span class="star" data-value="2">☆</span>
-                        <span class="star" data-value="3">☆</span>
-                        <span class="star" data-value="4">☆</span>
-                        <span class="star" data-value="5">☆</span>
-                    </div>
-                    <p>Comentario: </p>
-                </div>
-            </section>
-
+            <div id="app"></div>
         </main>
     </div>
 
-<script src="/js/book.js"></script>
+<script type='text/babel' src="/js/book.js"></script>
 
 
 </body>
