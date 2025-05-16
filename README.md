@@ -101,6 +101,8 @@ Eliminar un libro de nuestras categorias Pendiente, Leido y Actual.
 
 #### ✩ `ActualizarPuntuacionLibro(int bookId)`
 Esta funcion actualiza la puntuación del genérica del libro cada vez que un usuario añade un nuevo comentario.
+
+
 ---
 
 ### 🔧 Backend (UserController.cs)
@@ -122,6 +124,8 @@ Actualizar la información de un usuario existente.
 
 #### ✩ `DeleteUserBookItem(int id)`
 Elimina un libro de la biblioteca personal del usuario.
+
+
 ---
 
 ### 🔧 Backend (LibraryItemsController.cs)
@@ -143,12 +147,16 @@ Actualizar la información de un usuario existente.
 
 #### ✩ `DeleteUserBookItem(int id)`
 Elimina un libro de la biblioteca personal del usuario.
+
+
 ---
 
 ### ⚛️ Frontend (login.js, componentes React)
 
 #### ✩ `checkUserExists(nickname, email)`
 Funcion que usamos en el registro, para confirmar las credenciales del usuario.
+
+
 ---
 
 ### ⚛️ Frontend (index.js, componentes React)
@@ -158,6 +166,8 @@ Hacemos llamada a BBDD library para recuperar todos los libros y renderizarlos e
 
 #### ✩ `fetchLastBooksCarousel(loggedUser) `
 Hacemos llamada a BBDD library para recuperar los últimos 10 libros y renderizarlos en el DOM
+
+
 ---
 
 ### ⚛️ Frontend (category.js, componentes React)
@@ -167,6 +177,8 @@ En este caso la funcion llama a la url para recibir los libros del usuario pero 
 
 #### ✩ `deleteBook(bookId)`
 Elimina el libro de nuestra categoria.
+
+
 ---
 
 ### ⚛️ Frontend (book.js, componentes React)
@@ -185,12 +197,16 @@ Componente que se encarga de renderizar la información correctpondiente al libr
 
 #### ✩ `Coments({coments, book, userID})`
 Componente que se encarga de renderizar la información correspondiente a los comentarios que tenga el libro. También de gestionar los estados del comentario del usuario, permitiendo añadir un nuevo comentario o editarlo.
+
+
 ---
 
 ### ⚛️ Frontend (FQ.js, componentes React)
 
 #### ✩ `sendFormFQ()`
 Se encarga de enviar un sweet alert cuando se envie el formulario. También gestiona que no se pueda enviar el formulario si no están todos los campos cumplimentados.
+
+
 ---
 
 ### ⚛️ Frontend (user.js, componentes React)
@@ -203,6 +219,8 @@ Función para recuperar la información del usuario a partir del id almacenado e
 
 #### ✩ `saveNewUserInformation(user)`
 Función para llamar a BBDD y guardar la información actualizada del usuario.
+
+
 ---
 
 ### 🧩 Extras
