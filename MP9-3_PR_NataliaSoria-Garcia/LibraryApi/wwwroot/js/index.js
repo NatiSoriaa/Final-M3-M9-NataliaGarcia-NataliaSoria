@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+  console.log(loggedUser);
     fetchBooks(loggedUser); 
     setupLogout();
     setupRatings();
@@ -65,11 +66,7 @@ async function fetchBooks(loggedUser) {
 
 
 
-
 // Evento global para los botones "+"
-
-
-
 
 document.addEventListener('click', function (e) {
   if (e.target.classList.contains('add-button')) {
@@ -83,7 +80,10 @@ document.addEventListener('click', function (e) {
     const bookTitle = bookRow.querySelector('h3').innerText;
     const bookId = bookRow.dataset.id;
     const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
-
+    if (!loggedUser || !loggedUser.id || isNaN(parseInt(bookId))) {
+      Swal.fire("❌ Usuario o libro inválido.");
+      return;
+    }
     fetch('http://localhost:5129/api/UserBook', {
       method: 'POST',
       headers: {
