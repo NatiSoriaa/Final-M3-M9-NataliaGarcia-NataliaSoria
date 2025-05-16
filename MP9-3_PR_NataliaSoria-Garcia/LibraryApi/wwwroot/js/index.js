@@ -221,10 +221,6 @@ function seeBook(bookid,userID)
 
 
 //MODIFICAR ESTRELLAS
-
-
-
-
 function setupRatings() {
   document.querySelectorAll(".rating").forEach((rating) => {
     const stars = rating.querySelectorAll(".star");
@@ -263,10 +259,6 @@ function setupRatings() {
 
 
 // LOGIN Y REGISTER
-
-
-
-
 //deslogar usuario
 function setupLogout() {
   document.getElementById("logout-btn").addEventListener("click", (e) =>{
@@ -277,50 +269,3 @@ function setupLogout() {
 }
 
 
-
-
-
-//NO HACEN FALTA YA ESTARÍAN EN EL LOGIN
-
-// function setupFormEvents() {
-
-//     document.querySelector('#loginForm').addEventListener('submit', (event) => {
-//         event.preventDefault();
-//         const email = document.getElementById('log-user').value;
-//         const password = document.getElementById('log-passw').value;
-//         localStorage.setItem('loggedEmail', email); 
-//         login(email, password); 
-//     });
-
-//     document.querySelector('#registerForm').addEventListener('submit', (event) => {
-//         event.preventDefault();
-//         const username = document.getElementById('reg-user').value;
-//         const email = document.getElementById('reg-email').value;
-//         const password = document.getElementById('reg-passw').value;
-//         createUser(username, email, password); 
-//     });
-// }
-
-// function setupModalEvents() {
-//     const loginBtn = document.getElementById("showLogin");
-//     const registerBtn = document.getElementById("showRegister");
-//     const loginForm = document.getElementById("loginForm");
-//     const registerForm = document.getElementById("registerForm");
-
-//     loginForm.classList.add("active");
-
-//     loginBtn.addEventListener("click", () => {
-//         toggleActiveState(loginForm, registerForm, loginBtn, registerBtn);
-//     });
-
-//     registerBtn.addEventListener("click", () => {
-//         toggleActiveState(registerForm, loginForm, registerBtn, loginBtn);
-//     });
-
-//     function toggleActiveState(activeForm, inactiveForm, activeBtn, inactiveBtn) {
-//         activeForm.classList.add("active");
-//         inactiveForm.classList.remove("active");
-//         activeBtn.classList.add("active");
-//         inactiveBtn.classList.remove("active");
-//     }
-// }
