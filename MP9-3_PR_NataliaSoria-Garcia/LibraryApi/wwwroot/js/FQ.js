@@ -44,25 +44,31 @@ function setupLogout() {
 //enviamos mensaje cuando se rellana formulario y resteamos info
 function sendFormFQ()
 {
-    const contactButton = document.getElementById("contactButton");
+    const form = document.getElementById("contactForm"); 
 
     const inputNombre = document.getElementById("nombre");
     const inputMail = document.getElementById("email");
     const inputMensaje = document.getElementById("mensaje");
 
-    contactButton.addEventListener('click',(e)=>{
+    form.addEventListener('submit',(e)=>{
         console.log("Pulsando boton enviar formulario");
         e.preventDefault();
+        if (!form || !inputNombre || !inputMail || !inputMensaje) {
+          console.error("❌ Algún elemento del formulario no se encontró");
+          return;
+        }
+        else
+        {
+          inputNombre.value="";
+          inputMail.value="";
+          inputMensaje.value="";
 
-        inputNombre.value="";
-        inputMail.value="";
-        inputMensaje.value="";
-
-        Swal.fire({
-            title: "¡Mensaje enviado!",
-            text: "Gracias por contactarnos. Te responderemos pronto.",
-            icon: "success",
-            confirmButtonText: "OK"
-        });
+          Swal.fire({
+              title: "¡Mensaje enviado!",
+              text: "Gracias por contactarnos. Te responderemos pronto.",
+              icon: "success",
+              confirmButtonText: "OK"
+          });
+        }
     });
 }

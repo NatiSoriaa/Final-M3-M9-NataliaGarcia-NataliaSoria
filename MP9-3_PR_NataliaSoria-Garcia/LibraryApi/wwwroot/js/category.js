@@ -21,6 +21,22 @@ async function fetchBooks() {
   const url = `/api/UserBook/state/${state}?id_user=${userId}`; // URL relativa para producción
   console.log("📡 Haciendo fetch a:", url);
 
+  const h2 = document.querySelector('h2');
+
+  if(state=="pendiente")
+  {
+    h2.innerHTML="Lecturas Pendientes"
+  }
+  else if(state=="leidos")
+  {
+    h2.innerHTML="Libros Leídos"
+  }
+  else
+  {
+    h2.innerHTML="Lecturas Actuales"
+  }
+
+
   try {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Fetch fallido con código ${response.status}`);
@@ -102,7 +118,7 @@ async function fetchBooks() {
   } catch (e) {
     console.error("❌ Error al recuperar los libros:", e);
     const errorMessage = document.createElement('p');
-    errorMessage.textContent = 'Ocurrió un error al cargar los libros.';
+    errorMessage.textContent = 'Aún no tienes libros almacenados en esta categoría.';
     errorMessage.style.color = 'red';
     errorMessage.style.textAlign = 'center';
     category1Container.appendChild(errorMessage);
