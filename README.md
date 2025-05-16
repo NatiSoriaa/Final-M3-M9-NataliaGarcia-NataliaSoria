@@ -76,68 +76,133 @@ Y finalmente, el archivo `Program.cs` donde configuramos el servidor, rutas y se
 
 ## 🧠 EXPLICACIÓN DE FUNCIONES CLAVE
 
-### 🔧 Backend (UserBookController.cs, LibraryItemsController.cs, etc.)
+### 🔧 Backend (UserBookController.cs)
 
 #### ✩ `GetBookComents(int id_book)`
-
 Devuelve todos los comentarios de un libro, incluyendo `userId`, `comment`, `rating` e `id` si existe contenido.
 
+#### ✩ `GetUserBookItem(int id_book)`
+Devuelve un libro concreto filtrando por su `id`
+
+#### ✩ `GetBookByCategory(string state ,  [FromQuery] int id_user)`
+Devuelve todos los libros que existan en BBDD filtrados por un estado.
+
+#### ✩ `PutUserBookItem(int id, [FromQuery] string status, [FromQuery] string comment, [FromQuery] int rating)`
+Actualizamos el comentario o la puntuacion de un libro.
+
 #### ✩ `PostUserBookItem(UserBookItem userBookItem)`
+Publicamos un nuevo comentario sobre un libro.
 
-Guarda una nueva relación usuario-libro en la tabla `UserBookItems`. Llama también a `ActualizarPuntuacionLibro` para recalcular la puntuación global.
-
-#### ✩ `PutUserBookItem(int id, string status, string comment, int rating)`
-
-Actualiza la relación usuario-libro (estado, comentario y/o puntuación) y recalcula el promedio del libro.
-
-#### ✩ `ActualizarPuntuacionLibro(int bookId)`
-
-Suma todas las puntuaciones registradas del libro y actualiza el promedio en `LibraryItems`.
-
-#### ✩ `GetBookByCategory(string state, int id_user)`
-
-Devuelve los libros de un usuario según el estado seleccionado: pendiente, actual o leído.
+#### ✩ `DeleteComment(int id)`
+Eliminar un comentario.
 
 #### ✩ `DeleteUserBookItem(int id)`
+Eliminar un libro de nuestras categorias Pendiente, Leido y Actual.
 
+#### ✩ `ActualizarPuntuacionLibro(int bookId)`
+Esta funcion actualiza la puntuación del genérica del libro cada vez que un usuario añade un nuevo comentario.
+---
+
+### 🔧 Backend (UserController.cs)
+
+#### ✩ `GetUserByNickname([FromQuery] string nickname, [FromQuery] string password)`
+Funcion para el loggeo del usuario. Chequea que el nickname y la contraseña existan en BBDD y coincidan
+
+#### ✩ `UserExists([FromQuery] string nickname, [FromQuery] string email)`
+Revisa si un usuario existe en nuestra BBDD a partir de su email y nickname
+
+#### ✩ `GetUserID([FromQuery] int id)`
+Recuperamos la información de un usuario a partir de su ID
+
+#### ✩ `PostUserItem(UserItem userItem)`
+Creación de nuevo usuario.
+
+#### ✩ `PutUserItem([FromBody] UserItem userItem)`
+Actualizar la información de un usuario existente.
+
+#### ✩ `DeleteUserBookItem(int id)`
 Elimina un libro de la biblioteca personal del usuario.
+---
 
+### 🔧 Backend (LibraryItemsController.cs)
+
+#### ✩ `GetLibraryItems`
+Recuperamos todos los libros de nuestra BBDD
+
+#### ✩ `GetLastBooks()`
+Recuperamos los últimoms 10 libros actualizados en nuestra BBDD para ver las novedades
+
+#### ✩ `GetOneBooks(int book_id)`
+Recuperamos la información de un libro a partir de su ID
+
+#### ✩ `PostUserItem(UserItem userItem)`
+Creación de nuevo usuario.
+
+#### ✩ `PutUserItem([FromBody] UserItem userItem)`
+Actualizar la información de un usuario existente.
+
+#### ✩ `DeleteUserBookItem(int id)`
+Elimina un libro de la biblioteca personal del usuario.
+---
+
+### ⚛️ Frontend (login.js, componentes React)
+
+#### ✩ `checkUserExists(nickname, email)`
+Funcion que usamos en el registro, para confirmar las credenciales del usuario.
+---
+
+### ⚛️ Frontend (index.js, componentes React)
+
+#### ✩ `fetchBooks(loggedUser)`
+Hacemos llamada a BBDD library para recuperar todos los libros y renderizarlos en el DOM
+
+#### ✩ `fetchLastBooksCarousel(loggedUser) `
+Hacemos llamada a BBDD library para recuperar los últimos 10 libros y renderizarlos en el DOM
+---
+
+### ⚛️ Frontend (category.js, componentes React)
+
+#### ✩ `fetchBooks()`
+En este caso la funcion llama a la url para recibir los libros del usuario pero con un estado en concreto y los renderiza en el DOM de forma dinámica.
+
+#### ✩ `deleteBook(bookId)`
+Elimina el libro de nuestra categoria.
 ---
 
 ### ⚛️ Frontend (book.js, componentes React)
 
 #### ✩ `searchBookInformation(bookId)`
-
-Recupera los datos básicos del libro desde `/LibraryItems/GetOneBooks/{id}`.
+Busca la información correspondiente al libro en BBDD
 
 #### ✩ `searchBookComents(bookId)`
+Busca todos los comentarios en BBDD que existan para ese libro.
 
-Obtiene comentarios del libro, luego usa `userId` para buscar los `nickname` con otro `fetch`.
+#### ✩ `BookDescription(title)`
+Llama a una nueva api, donde recuperamos la descripción del libro a partir de su titulo
 
-#### ✩ `BookDescription(bookTitle)`
+#### ✩ `Book({book,descripcion,coments,userID})`
+Componente que se encarga de renderizar la información correctpondiente al libro (autor, titulo, descripción y puntuación.
 
-Hace una llamada a Google Books API para obtener la descripción literaria del libro.
+#### ✩ `Coments({coments, book, userID})`
+Componente que se encarga de renderizar la información correspondiente a los comentarios que tenga el libro. También de gestionar los estados del comentario del usuario, permitiendo añadir un nuevo comentario o editarlo.
+---
 
-#### ✩ `Coments({ coments, book, userID })`
+### ⚛️ Frontend (FQ.js, componentes React)
 
-Componente que muestra:
+#### ✩ `sendFormFQ()`
+Se encarga de enviar un sweet alert cuando se envie el formulario. También gestiona que no se pueda enviar el formulario si no están todos los campos cumplimentados.
+---
 
-* Reseñas de otros usuarios.
-* Reseña del usuario actual (si existe), con opción de editar.
-* Formulario para crear nueva reseña si el usuario aún no ha comentado.
+### ⚛️ Frontend (user.js, componentes React)
 
-#### ✩ `handleEnviarcomentario()`
+#### ✩ `Person({user})`
+Componente que se encarga de renderizar la información recibida del usuario. Tamibién de controlar los estados para que se pueda modificar la información del usuario y se haga la llamada correspondiente a BBDD para realizar el PUT.
 
-Controla el envío de reseñas. Detecta si el usuario ya tiene reseña:
+#### ✩ `findUser()`
+Función para recuperar la información del usuario a partir del id almacenado en localStorage.
 
-* Si sí: realiza un `PUT`.
-* Si no: realiza un `POST`.
-  Luego recarga la vista para mostrar la puntuación actualizada.
-
-#### ✩ `prinStarts(container, puntuation)`
-
-Pinta visualmente las estrellas del libro (de 1 a 5) según la puntuación total.
-
+#### ✩ `saveNewUserInformation(user)`
+Función para llamar a BBDD y guardar la información actualizada del usuario.
 ---
 
 ### 🧩 Extras
@@ -150,6 +215,10 @@ Elimina el usuario del `localStorage` y redirige al login.
 
 Redirige según el botón pulsado (pendientes, actuales, finalizados) pasando el estado por URL.
 
+#### ✩ `ResetPAssword([FromBody] EmailRequest request)`
+
+Crea una contraseña aleatoria cuando el usuario solicite una por olvidarse de la propia.
+ 
 ---
 
 ## ⚙️ Ejecución del programa y pruebas
@@ -190,7 +259,12 @@ dotnet run --launch-profile https
 
 ---
 
-## 🔗 Webgrafía
+## 🔗 FUENTES CONSULTADAS
 
 * [https://dev.to/isaacojeda/explorando-la-autenticacion-bearer-en-aspnet-core-8-5e95](https://dev.to/isaacojeda/explorando-la-autenticacion-bearer-en-aspnet-core-8-5e95)
+
+## 🔗 APIS USADAS
+
+* [Open Library](https://openlibrary.org/)
+* [Google Apis](https://www.googleapis.com)
 
