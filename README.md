@@ -4,6 +4,14 @@ Con este proyecto hemos querido programar una aplicación web para gestionar una
 
 ---
 
+## 🎯 Justificación y motivación del proyecto
+
+Este proyecto surge de la necesidad de contar con una app/web digital y fácil de comprender que permita a los lectores organizar sus lecturas. Leer es un hobby frecuente y que cada vez se está poniendo más de moda gracias influencers que empiezan a patrocinarlo en redes. Pero, cuando eres un lector muy voraz, a veces es dificil llevar un control sobre tus lecturas y las opiniones sobre ellas. 
+
+Con esta aplicación buscamos ofrecer una experiencia útil, accesible y personalizada para llevar un control de las lecturas y ayudar al resto de la comunidad lectora  compartiendo puntuaciones y comentarios.
+
+---
+
 ## 🧩 Tecnologías utilizadas
 
 * ⚛️ React (v18) + Babel
@@ -23,6 +31,47 @@ Con este proyecto hemos querido programar una aplicación web para gestionar una
 * Edición y actualización de reseñas.
 * Actualización automática del promedio de puntuación del libro.
 * Protección de rutas (requiere login).
+
+---
+
+## 🧱 Esquema de arquitectura
+
+La arquitectura del proyecto sigue el modelo cliente-servidor y se compone de tres partes principales:
+
+1. **Frontend (React):**
+   - Se encarga de la interfaz visual del usuario.
+   - Realiza peticiones al backend CRUD y  muestra los resultados por FE.
+   - Contiene los componentes React como `Login`, `Books`, `Categories`, `User`, etc. para realizar las llamadas al BE y que las paginas se rendericen de manera dinámica dependieno de la información que reciban.
+
+2. **Backend (API .NET Core):**
+   - Expuesta como API RESTful.
+   - Gestiona la lógica de negocio, acceso a base de datos y validaciones. Desde program.cs además de levantar la aplicación llamamos a la API books externa para revisar si se han añadido libros nuevos y actualizar nuestra BBDD en caso afirmativo.
+   - Contiene los controladores (`Controllers`), servicios (`Services`) y modelos (`Models`).
+
+3. **Base de datos (SQLite):**
+   - Almacena la información correspondiente a los usuarios, libros y los comentarios y puntuaciones de estos.
+
+---
+  
+## 🧠 Aplicación del modelo MVC en el BE
+
+El backend se ha implentado en ASP.NET Core y sigue la arquitectura MVC:
+
+- **Modelo (`/Models`):**
+  - En esta carpeta estarían todos los archivos correspondiente a los objetos que tenemos en nuestra BBDD.
+
+- **Vista (`/Views`):**
+  - Encontramos todos los archivos .html de nuestro proyecto.
+  - En program.cs creamos los enrutamientos a cada uno de los archivos creados.
+ 
+- - **Vista (`/wwwroot`):**
+  - Encontramos las carpetas /cs, /js y /img con todos los archivos que se encargan del renderizadoo y estilado de nuestra web.
+
+- **Controlador (`/Controllers`):**
+  - Contienen los tres archivos que se encargan de todas las funciones CRUD que hacemos a nuestras BBDD. Definiendo las rutas de las API y la lógica del negocio.
+
+**Servicios (`/Services`)**:
+- En esta carpeta hemos programado los archivos que se encargan de las llamadas a API's externas y de la gestionión incial de comparartiva de libros BBDD-API que realizamos cada vez que accedemos a la /home.
 
 ---
 
