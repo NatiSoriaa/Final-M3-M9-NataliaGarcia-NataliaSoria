@@ -2,6 +2,9 @@
 
 Con este proyecto hemos querido programar una aplicación web para gestionar una biblioteca personal, donde pudieras ir almacenando tus lecturas actuales, futuras o ya realizadas. También puedes puntuar los libros ya leídos y poner comentarios para que el resto de usuarios puedan saber que te parecen.
 
+###URL WEB HOSTING: http://natgsarabia-001-site1.qtempurl.com/login 
+usuarios: nagasa contraseña: nagasa123
+         admin   contraseña: admin123
 ---
 
 ## 🎯 Justificación y motivación del proyecto
