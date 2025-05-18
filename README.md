@@ -3,8 +3,17 @@
 Con este proyecto hemos querido programar una aplicación web para gestionar una biblioteca personal, donde pudieras ir almacenando tus lecturas actuales, futuras o ya realizadas. También puedes puntuar los libros ya leídos y poner comentarios para que el resto de usuarios puedan saber que te parecen.
 
 ###URL WEB HOSTING: http://natgsarabia-001-site1.qtempurl.com/login 
+
 usuarios: nagasa contraseña: nagasa123
          admin   contraseña: admin123
+
+
+Actualizaciones y cambios que se han tenido que hacer para que se pudiera realizar el hosting:
+1. Convertir la aplicacion a NET 6.0
+2. Migrar la base de datos de sqLite a sqlServer
+3. Actualizar todas las url de de las llamadas a la API con la url de la BBDD que hemos creado, teniendo en cuenta que todas fueran http y no https
+
+
 ---
 
 ## 🎯 Justificación y motivación del proyecto
